@@ -1,7 +1,6 @@
 # 🎫 We2Go – Mua vé online cực chill
 
 > We2Go – Mua vé sự kiện nhanh như lướt TikTok.  
-> Có chatbot hỏi gì cũng biết. 🤖✨
 
 ---
 
