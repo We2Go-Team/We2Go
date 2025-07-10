@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}Trang chủ{% endblock %}
+
+{% block content %}
+<main>
+    <div class="home">
+        <div class="container">
+            {% include "components/banner.html" %}
+            {% include "components/section_categories.html" %}
+            {% include "components/section_highlight.html" %}
+
+
+        </div>
+    </div>
+</main>
+{% endblock %}

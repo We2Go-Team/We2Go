@@ -1,0 +1,86 @@
+<div class="section-highlight mt-5">
+    <div class="title">
+        <h2>Nổi bật</h2>
+        <p>Khám phá các sự kiện nổi bật sắp tới</p>
+    </div>
+    <div class="ticket-carousel">
+        <div class="text-center my-3">
+            <div class="row mx-auto my-auto justify-content-center">
+                <div id="recipeCarousel" class="carousel slide p-0" data-bs-ride="highlight-carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img src="https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F360%2F479%2Fts%2Fds%2Fd9%2F52%2F81%2F450de0c280bfc12a09f991208a936375.jpg&w=384&q=75"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="card-img-overlay">Slide 1</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img src="https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F360%2F479%2Fts%2Fds%2F2a%2F13%2F55%2F72bb5bec990c49cd18f9b73a570d67cc.jpg&w=384&q=75"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="card-img-overlay">Slide 2</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img src="https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F360%2F479%2Fts%2Fds%2F04%2Fa3%2Fce%2F39780d31141e99d9d4f5e32ac96584d4.jpg&w=384&q=75"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="card-img-overlay">Slide 3</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-img">
+                                        <img src="https://ticketbox.vn/_next/image?url=https%3A%2F%2Fimages.tkbcdn.com%2F2%2F360%2F479%2Fts%2Fds%2F2a%2F9e%2F57%2Fbeb7172537b8cdccf0dfe263a6e8946b.jpg&w=384&q=75"
+                                            class="img-fluid">
+                                    </div>
+                                    <div class="card-img-overlay">Slide 4</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let items = document.querySelectorAll('#recipeCarousel .carousel-item')
+
+    items.forEach((el) => {
+        const minPerSlide = 4
+        let next = el.nextElementSibling
+        for (var i = 1; i < minPerSlide; i++) {
+            if (!next) {
+                // wrap carousel by using first child
+                next = items[0]
+            }
+            let cloneChild = next.cloneNode(true)
+            el.appendChild(cloneChild.children[0])
+            next = next.nextElementSibling
+        }
+    })
+</script>

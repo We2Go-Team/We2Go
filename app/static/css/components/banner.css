@@ -1,0 +1,60 @@
+.banner {}
+
+.banner .carousel-fullscreen {
+    height: 60vh;
+    border-radius: 10px;
+    overflow: hidden;
+
+}
+
+.banner .carousel-control-prev {
+    position: relative;
+    width: 100%;
+
+}
+
+
+
+.banner .carousel-fullscreen .carousel-item {
+    height: 60vh;
+    background-color: #ddd;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+
+.banner .carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.74);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+}
+
+.banner .carousel-overlay h2 {
+    font-size: 1.8rem;
+    text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.6);
+}
+
+.banner .carousel-overlay p {
+    font-size: 1.0rem;
+    text-shadow: 1px 4px 2px rgba(0, 0, 0, 0.6);
+}
+
+
+.banner .carousel-overlay i {
+    font-size: 2.0rem;
+    margin-bottom: 1rem;
+    color: #ffd700;
+}

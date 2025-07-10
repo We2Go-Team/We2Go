@@ -1,0 +1,22 @@
+<header>
+    <nav class="container">
+        <ul>
+            <li><a href="/">Trang chủ</a></li>
+            <li><a href="/tickets">Sự kiện</a></li>
+            <li><a href="/about">Giới thiệu</a></li>
+            <li><a href="/contact">Liên hệ</a></li>
+        </ul>
+
+        <div class="logo">
+            <a href="/">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="My Image" width="300">
+            </a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Tìm kiếm sự kiện" />
+            <button class="register">Đăng kí</button>
+            <button class="login">Đăng nhập</button>
+
+        </div>
+    </nav>
+</header>
