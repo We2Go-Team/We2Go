@@ -1,0 +1,12 @@
+CREATE TABLE users (
+    id CHAR(36) NOT NULL PRIMARY KEY DEFAULT (UUID()),
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    avatar VARCHAR(255),  
+    email VARCHAR(255) UNIQUE,
+    phone VARCHAR(20),
+    role ENUM('USER', 'ADMIN') DEFAULT 'USER',
+    sessions_key VARCHAR(255), 
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
