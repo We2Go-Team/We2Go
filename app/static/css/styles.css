@@ -4,9 +4,12 @@
 @import "./base/globel.css";
 @import "./base/fonts.css";
 
+/* Pages Styles Import */
+@import "./pages/login.css";
+
 /* Components Styles Import */
 @import "./components/header.css";
-@import "./components/logo.css";
+/* @import "./components/logo.css"; */
 @import "./components/banner.css";
 @import "./components/section_highlight.css";
 @import "./components/section_categories.css";

@@ -6,7 +6,7 @@ def create_app():
     app = Flask(__name__)
     
     # Cấu hình MySQL
-    mysql_config(app)
+    # mysql_config(app)
     app.secret_key = 'your-very-secret-key-123456789'
     # Cấu hình Routes
     from .routes import home, auth
