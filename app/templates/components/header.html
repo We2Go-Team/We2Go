@@ -1,8 +1,5 @@
-
-
 <header>
     <nav class="container">
-
         <ul>
             <li><a href="/">Trang chủ</a></li>
             <li><a href="/tickets">Sự kiện</a></li>
@@ -12,14 +9,26 @@
 
         <div class="logo">
             <a href="/">
-                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="My Image" width="300">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo Image" width="300">
             </a>
         </div>
         <div class="search-bar">
-            <input type="text" placeholder="Tìm kiếm sự kiện" />
+            <div class="search">
+                <input type="text" placeholder="Tìm kiếm sự kiện" id="search-input"/>
+                <i class="bi bi-search" onclick="onSearch()"></i>
+            </div>
+
             <button class="register-btn">Đăng kí</button>
             <button class="login-btn">Đăng nhập</button>
-
         </div>
     </nav>
 </header>
+
+<script>
+    function onSearch() {
+        const keyword = document.getElementById("search-input").value.trim();
+        if (keyword) {
+            window.location.href = `/tickets/search?q=${encodeURIComponent(keyword)}`;
+        }
+    }
+</script>

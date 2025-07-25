@@ -9,6 +9,12 @@
             {% include "components/banner.html" %}
             {% include "components/section_categories.html" %}
             {% include "components/section_highlight.html" %}
+
+            <!-- Rebuild the component  -->
+            {% set section_id = "trending-1" %}
+            {% include "components/section_trending.html" %}
+            {% set section_id = "trending-2" %}
+            {% include "components/section_trending.html" %}
         </div>
     </div>
 </main>

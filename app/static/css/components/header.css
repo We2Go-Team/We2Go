@@ -36,6 +36,33 @@ header nav .search-bar {
     gap: 20px;
 }
 
+header nav .search-bar .search {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    position: relative;
+}
+
+header nav .search-bar .search i {
+    display: block;
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+header nav .search-bar .search i:hover {
+    opacity: 1;
+}
+
 header nav .search-bar input {
     flex-grow: 1;
     height: 50%;
@@ -44,6 +71,7 @@ header nav .search-bar input {
     border: 1px solid #ddd;
     padding: 0px 20px;
     margin-right: 10px;
+    flex-grow: 1;
 }
 
 header nav .search-bar button {

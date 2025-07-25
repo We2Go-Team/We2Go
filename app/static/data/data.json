@@ -1,0 +1,147 @@
+[
+  {
+    "name": "ĐẤU TRƯỜNG HỖN CHIẾN MÙA 2",
+    "type": "gaming",
+    "price": 350000,
+    "url": "https://images.tkbcdn.com/2/608/332/ts/ds/ac/9d/06/2e296e2c69c4b19e077057468546b94b.png",
+    "location": {
+      "name": "Nhà Thi Đấu Nguyễn Du",
+      "address": "Số 116 Nguyễn Du, Phường Bến Thành, Quận 1, Thành Phố Hồ Chí Minh"
+    },
+    "date": "10:00 - 22:00, 09 tháng 08, 2025",
+    "description": "Sự kiện âm nhạc sôi động với các nghệ sĩ nổi tiếng trong không gian ngoài trời hoành tráng."
+  },
+  {
+    "name": "V CONCERT 'RẠNG RỠ VIỆT NAM' - CHẠM VÀO ĐỈNH CAO CỦA ÂM NHẠC VÀ CẢM XÚC",
+    "type": "concert",
+    "price": 800000,
+    "url": "https://images.tkbcdn.com/2/608/332/ts/ds/4d/5d/93/c38fa1bc1f9ca5f95b882b12d45883bc.jpg",
+    "location": {
+      "name": "Trung tâm Triển lãm Việt Nam",
+      "address": "Trường Sa, Xã Đông Hội, Huyện Đông Anh, Thành Phố Hà Nội"
+    },
+    "date": "17:00 - 23:00, 09 tháng 08, 2025",
+    "description": "Cập nhật xu hướng AI và khám phá các công nghệ mới với diễn giả từ Google, OpenAI, VinAI,..."
+  },
+  {
+    "name": "HoYo FEST 2025",
+    "type": "gaming",
+    "price": 100000,
+    "url": "https://images.tkbcdn.com/2/608/332/ts/ds/54/66/50/3bf692032acbb7a4e48e1ab215b92212.jpg",
+    "location": {
+      "name": "Sky Expo, Hall A5, TP. Hồ Chí Minh",
+      "address": "Đ. Số 1, Phường Tân Hưng Thuận, Quận 12, Thành Phố Hồ Chí Minh"
+    },
+    "date": "10:00, 24 tháng 07, 2025 - 20:00, 27 tháng 07, 2025",
+    "description": "Không gian nhẹ nhàng và gần gũi, nơi cảm xúc và âm nhạc mộc mạc giao hòa."
+  },
+  {
+    "name": "SÂN KHẤU THIÊN ĐĂNG : NHỮNG CON MA NHÀ HÁT",
+    "type": "concert",
+    "price": 150000,
+    "url": "https://images.tkbcdn.com/2/608/332/ts/ds/b5/4b/21/cabcacf5c93e96fae90c180f4efef1b0.jpg",
+    "location": {
+      "name": "TẦNG 12B TÒA NHÀ IMC",
+      "address": "62 Trần Quang Khải, Phường Tân Định, Quận 1, Thành Phố Hồ Chí Minh"
+    },
+    "date": "18:00 - 21:00, 27 tháng 07, 2025",
+    "description": "Khám phá nghệ thuật trong thời đại số, nơi công nghệ kết hợp cùng cảm hứng sáng tạo."
+  },
+  {
+    "name": "VBA STAR X 2025 | Game 49 - Danang Dragons vs Cantho Catfish",
+    "type": "sports",
+    "price": 250000,
+    "url": "https://images.tkbcdn.com/2/608/332/ts/ds/b7/2c/4e/653ef664523e3befc80fe831f79e80a7.jpg",
+    "location": {
+      "name": "Nhà thi đấu Quân Khu 5",
+      "address": "Số 7 Duy Tân, Phường Hòa Cường Bắc, Quận Hải Châu, Thành Phố Đà Nẵng"
+    },
+    "date": "19:00 - 21:30, 08 tháng 08, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+
+  {
+    "name": "1900 Future Hits #72: (S)TRONG Trọng Hiếu - '1st Live Stage: KHO BÁU' | Saturday",
+    "type": "concert",
+    "price": 500000,
+    "url": "https://salt.tkbcdn.com/ts/ds/b0/b7/0a/78d192a2170056709e3b39cb2459d710.jpg",
+    "location": {
+      "name": "1900 Le Théâtre",
+      "address": "8B Tạ Hiện, Phường Hàng Buồm, Quận Hoàn Kiếm, Thành Phố Hà Nội"
+    },
+    "date": "21:00, 26 tháng 07, 2025 - 01:00, 27 tháng 07, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+  {
+    "name": "Vietnam-Taiwan Tech Solution Day - From AI to Industry 4.0",
+    "type": "technologies",
+    "price": 500000,
+    "url": "https://salt.tkbcdn.com/ts/ds/60/3f/a7/bc973e9ddf8ffda64eeb7083bbead013.png",
+    "location": {
+      "name": "The Executive Center Friendship Tower",
+      "address": "31 Đ. Lê Duẩn, Bến Nghé, Quận 1, Hồ Chí Minh, Vietnam, Quận 2, Thành Phố Hồ Chí Minh"
+    },
+    "date": "13:30 - 17:30, 15 tháng 07, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+  {
+    "name": "FUTURE WITH AI: AI & TƯƠNG LAI DOANH NGHIỆP - Chiến Lược Vượt Sóng Đẫn Đầu",
+    "type": "technologies",
+    "price": 500000,
+    "url": "https://salt.tkbcdn.com/ts/ds/11/4a/b6/be5444192015a9ef20015291c26b5d1e.jpg",
+    "location": {
+      "name": "TRUNG TÂM HỘI NGHỊ CÔNG ĐOÀN, 1A YẾT KIÊU",
+      "address": "TP. HÀ NỘI, Phường Trần Hưng Đạo, Quận Hoàn Kiếm, Thành Phố Hà Nội"
+    },
+    "date": "08:00 - 18:00, 28 tháng 06, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+  {
+    "name": "[2nd Launch] SOOBIN LIVE CONCERT: ALL-ROUNDER | OFFICIAL MERCHANDISE",
+    "type": "concert",
+    "price": 1299000,
+    "url": "https://salt.tkbcdn.com/ts/ds/c6/2d/af/5164cf8339ff62ba0cca174a231250af.png",
+    "location": {
+      "name": "Online Event",
+      "address": ""
+    },
+    "date": "00:00, 24 tháng 06, 2025 - 00:00, 07 tháng 07, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+  {
+    "name": "FAN MEETING HUYR - ĂN CỖ CÙNG HUY",
+    "type": "fan meeting",
+    "price": 500000,
+    "url": "https://salt.tkbcdn.com/ts/ds/16/0c/22/724d57956ce809e63f0755670def936e.png",
+    "location": {
+      "name": "Nhà Văn Hoá Thanh Niên",
+      "address": "4 Phạm Ngọc Thạch, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh"
+    },
+    "date": "18:00 - 23:00, 20 tháng 05, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+  {
+    "name": "REQUIEM WORLD TOUR - FEATURING KESHI",
+    "type": "concert",
+    "price": 2000000,
+    "url": "https://salt.tkbcdn.com/ts/ds/95/cf/d9/1ac481c86518d985464819d6248630a4.png",
+    "location": {
+      "name": "Nhà thi đấu Nguyễn Du",
+      "address": "116 Nguyễn Du, Phường Bến Thành, Quận 1, Thành Phố Hồ Chí Minh"
+    },
+    "date": "20:00 - 22:30, 07 tháng 03, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  },
+  {
+    "name": "Cho muôn đời sau",
+    "type": "concert",
+    "price": 1000000,
+    "url": "https://salt.tkbcdn.com/ts/ds/a8/07/f5/ca3c72a1fb17f2c1c11ee871d7ee1b04.jpg",
+    "location": {
+      "name": "Nhà hát Hồ Gươm",
+      "address": "40 Hàng Bài, Thành Phố Hà Nội"
+    },
+    "date": "20:00 - 23:00, 25 tháng 07, 2025",
+    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+  }
+]
