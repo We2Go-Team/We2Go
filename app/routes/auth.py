@@ -20,4 +20,5 @@ def login():
         formData = request.get_json() # Get data from body request
         auth_service.login(formData)
         return render_template('pages/home.html')
-    return render_template('pages/login.html')
+    else :
+        return render_template('pages/login.html', show_header=False)

@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block title %}Sự kiện{% endblock %}
+
+{% block content %}
+
+<h1>{{keyword}}</h1>
+<div class="tickets">
+    <div class="container">
+        <div class="tickets-header">
+            <div class="filter-container">
+                <button onclick="toggleForm(event, 'filter-form')" class="toggle-button"><i class="bi bi-funnel"></i> Bộ
+                    lọc</button>
+                <div class="filter-menu hidden" id="filter-form">
+                    <div class="filter-title">Bộ lọc</div>
+
+                    <div class="filter-section">
+                        <div class="filter-section-title">Địa điểm tổ chức</div>
+                        <div class="filter-options">
+                            <div class="filter-option active">Toàn quốc</div>
+                            <div class="filter-option">Hồ Chí Minh</div>
+                            <div class="filter-option">Hà Nội</div>
+                            <div class="filter-option">Đà Lạt</div>
+                            <div class="filter-option">Đà Nẵng</div>
+                            <div class="filter-option">Nước ngoài</div>
+                            <div class="filter-option">Vị trí khác</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <div class="filter-section-title">Giá tiền</div>
+                        <div class="filter-options">
+                            <div class="filter-option price-option active">Tất cả</div>
+                            <div class="filter-option price-option ">Dưới 1 triệu</div>
+                            <div class="filter-option price-option">Lớn hơn 1 triệu</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <div class="filter-section-title">Thể loại</div>
+                        <div class="filter-options">
+                            <div class="filter-option category-option">Khác</div>
+                            <div class="filter-option category-option">Thể thao</div>
+                            <div class="filter-option category-option">Giải trí</div>
+                            <div class="filter-option category-option">Âm nhạc</div>
+                            <div class="filter-option category-option">Giáo dục</div>
+                            <div class="filter-option category-option">Công nghệ</div>
+                            <div class="filter-option category-option">Ứng dụng</div>
+                        </div>
+                    </div>
+
+                    <div class="btn-actions">
+                        <button class="reset-btn">Thiết lập lại</button>
+                        <button class="confirm-btn">Áp dụng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tickets-list">
+            {% if tickets|length > 0 %}
+            <div class="tickets-inner">
+                {% for ticket in tickets %}
+                <div class="ticket-item">
+                    {% set event=ticket %}
+                    {% include "components/ticket_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <div class="not-found">
+                    <img src="{{ url_for('static', filename='images/not_found.jpg') }}" alt="My Image" width="300">
+                    <h3>Không tìm thấy vé sự kiện phù hợp.</h3>
+                    <p>Bạn vui lòng điều chỉnh thông tin để có thể tìm kiếm chính xác hơn nhé !</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleForm(event, idTarget) {
+        const form = document.getElementById(idTarget);
+        const button = event.currentTarget;
+        if (form && button) {
+            form.classList.toggle('hidden');
+            button.classList.toggle('active');
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle filter option clicks
+        const filterOptions = document.querySelectorAll('.filter-option');
+
+        filterOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                // Remove active class from siblings in the same group
+                const parent = this.parentElement;
+                parent.querySelectorAll('.filter-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+
+                // Add active class to clicked option
+                this.classList.add('active');
+            });
+        });
+
+        // Reset button functionality
+        const resetBtn = document.querySelector('.reset-btn');
+        resetBtn.addEventListener('click', function () {
+            // Reset all options to default
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.classList.remove('active');
+            });
+
+            // Set default active options
+            document.querySelector('.filter-options').firstElementChild.classList.add('active');
+            document.querySelector('.filter-section:nth-child(2) .filter-options .filter-option:first-child').classList.add('active');
+            document.querySelector('.filter-section:nth-child(3) .filter-options .filter-option:first-child').classList.add('active');
+        });
+    });
+</script>
+
+
+{% endblock %}

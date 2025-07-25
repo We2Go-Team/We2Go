@@ -2,6 +2,7 @@ header {
 
 }
 
+
 header nav {
     height: 95px;
     display: flex;
@@ -10,6 +11,7 @@ header nav {
     gap: 20px;
     font-size: 14px;
 }
+
 
 header nav .logo {
     display: flex;
@@ -34,6 +36,33 @@ header nav .search-bar {
     gap: 20px;
 }
 
+header nav .search-bar .search {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    position: relative;
+}
+
+header nav .search-bar .search i {
+    display: block;
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+header nav .search-bar .search i:hover {
+    opacity: 1;
+}
+
 header nav .search-bar input {
     flex-grow: 1;
     height: 50%;
@@ -42,6 +71,7 @@ header nav .search-bar input {
     border: 1px solid #ddd;
     padding: 0px 20px;
     margin-right: 10px;
+    flex-grow: 1;
 }
 
 header nav .search-bar button {
@@ -49,9 +79,9 @@ header nav .search-bar button {
     background-color: transparent;
 }
 
-header nav .search-bar button.login {
+header nav .search-bar button.login-btn {
     border: none;
-    background-color: black;
+    background-color: red;
     color: white;
     padding: 8px 20px;
     border-radius: 20px;

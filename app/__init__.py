@@ -4,14 +4,14 @@ from app.config.database import mysql_config
 
 def create_app():
     app = Flask(__name__)
-    
+    app.url_map.strict_slashes = False
     # Cấu hình MySQL
     mysql_config(app)
     app.secret_key = 'your-very-secret-key-123456789'
     # Cấu hình Routes
-    from .routes import home, auth
+    from .routes import home, auth, tickets
     app.register_blueprint(home)
     app.register_blueprint(auth)
-    
+    app.register_blueprint(tickets)
     
     return app

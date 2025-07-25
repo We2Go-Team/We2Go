@@ -1,18 +1,15 @@
 .section-highlight {
+    font-family: "Roboto", sans-serif;
     margin-right: -10px;
 }
 
-.section-highlight title {}
-
 .section-highlight h2 {
-    font-family: "Smooch Sans", sans-serif;
     text-transform: uppercase;
-    font-size: 1.5em;
+    font-size: 1.4em;
     font-weight: bold;
-    line-height: 1.0em;
+    line-height: 1.6em;
     margin-bottom: 0;
 }
-
 
 .section-highlight p {
     font-family: "Smooch Sans", sans-serif;
@@ -20,13 +17,12 @@
     font-size: 1.2em;
 }
 
-
 @media (max-width: 767px) {
-    .carousel-inner .carousel-item>div {
+    .carousel-inner .carousel-item > div {
         display: none;
     }
 
-    .carousel-inner .carousel-item>div:first-child {
+    .carousel-inner .carousel-item > div:first-child {
         display: block;
     }
 }
@@ -37,31 +33,29 @@
     display: flex;
 }
 
-.section-highlight .carousel-inner .carousel-item {
-
-}
-
-.section-highlight .carousel-inner .carousel-item .card{
+.section-highlight .carousel-inner .carousel-item .card {
     padding-right: 10px;
     border: none;
+    position: relative;
 }
 
-.section-highlight .carousel-inner .carousel-item .card .card-img{
+.section-highlight .carousel-inner .carousel-item .card .hover-info p {
+    margin: 0;
+    color: white;
+}
+
+.section-highlight .carousel-inner .carousel-item .card .card-img {
     border-radius: 5px;
     overflow: hidden;
     border: none;
 }
 
-.section-highlight .carousel-inner .carousel-item .card .card-img
-
-
-#recipeCarousel {
-    padding: 0!important;
+.section-highlight .carousel-inner .carousel-item .card .card-img #recipeCarousel {
+    padding: 0 !important;
 }
 
 /* medium and up screens */
 @media (min-width: 768px) {
-
     .section-highlight .carousel-inner .carousel-item-end.active,
     .section-highlight .carousel-inner .carousel-item-next {
         transform: translateX(25%);
