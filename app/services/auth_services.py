@@ -19,7 +19,6 @@ def register(data: dict):
     )
     return user_repository.create_user(user)
 
-
 def login(data: dict):
     email = data.get("email")
     password = data.get("password")
