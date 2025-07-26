@@ -5,7 +5,7 @@
     "price": 350000,
     "url": "https://images.tkbcdn.com/2/608/332/ts/ds/ac/9d/06/2e296e2c69c4b19e077057468546b94b.png",
     "location": {
-      "name": "Nhà Thi Đấu Nguyễn Du",
+      "venue": "Nhà Thi Đấu Nguyễn Du",
       "address": "Số 116 Nguyễn Du, Phường Bến Thành, Quận 1, Thành Phố Hồ Chí Minh"
     },
     "date": "10:00 - 22:00, 09 tháng 08, 2025",
@@ -17,7 +17,7 @@
     "price": 800000,
     "url": "https://images.tkbcdn.com/2/608/332/ts/ds/4d/5d/93/c38fa1bc1f9ca5f95b882b12d45883bc.jpg",
     "location": {
-      "name": "Trung tâm Triển lãm Việt Nam",
+      "venue": "Trung tâm Triển lãm Việt Nam",
       "address": "Trường Sa, Xã Đông Hội, Huyện Đông Anh, Thành Phố Hà Nội"
     },
     "date": "17:00 - 23:00, 09 tháng 08, 2025",
@@ -29,7 +29,7 @@
     "price": 100000,
     "url": "https://images.tkbcdn.com/2/608/332/ts/ds/54/66/50/3bf692032acbb7a4e48e1ab215b92212.jpg",
     "location": {
-      "name": "Sky Expo, Hall A5, TP. Hồ Chí Minh",
+      "venue": "Sky Expo, Hall A5, TP. Hồ Chí Minh",
       "address": "Đ. Số 1, Phường Tân Hưng Thuận, Quận 12, Thành Phố Hồ Chí Minh"
     },
     "date": "10:00, 24 tháng 07, 2025 - 20:00, 27 tháng 07, 2025",
@@ -41,7 +41,7 @@
     "price": 150000,
     "url": "https://images.tkbcdn.com/2/608/332/ts/ds/b5/4b/21/cabcacf5c93e96fae90c180f4efef1b0.jpg",
     "location": {
-      "name": "TẦNG 12B TÒA NHÀ IMC",
+      "venue": "TẦNG 12B TÒA NHÀ IMC",
       "address": "62 Trần Quang Khải, Phường Tân Định, Quận 1, Thành Phố Hồ Chí Minh"
     },
     "date": "18:00 - 21:00, 27 tháng 07, 2025",
@@ -53,20 +53,20 @@
     "price": 250000,
     "url": "https://images.tkbcdn.com/2/608/332/ts/ds/b7/2c/4e/653ef664523e3befc80fe831f79e80a7.jpg",
     "location": {
-      "name": "Nhà thi đấu Quân Khu 5",
+      "venue": "Nhà thi đấu Quân Khu 5",
       "address": "Số 7 Duy Tân, Phường Hòa Cường Bắc, Quận Hải Châu, Thành Phố Đà Nẵng"
     },
     "date": "19:00 - 21:30, 08 tháng 08, 2025",
-    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
   },
-
+  
   {
     "name": "1900 Future Hits #72: (S)TRONG Trọng Hiếu - '1st Live Stage: KHO BÁU' | Saturday",
     "type": "concert",
     "price": 500000,
     "url": "https://salt.tkbcdn.com/ts/ds/b0/b7/0a/78d192a2170056709e3b39cb2459d710.jpg",
     "location": {
-      "name": "1900 Le Théâtre",
+      "venue": "1900 Le Théâtre",
       "address": "8B Tạ Hiện, Phường Hàng Buồm, Quận Hoàn Kiếm, Thành Phố Hà Nội"
     },
     "date": "21:00, 26 tháng 07, 2025 - 01:00, 27 tháng 07, 2025",
@@ -78,7 +78,7 @@
     "price": 500000,
     "url": "https://salt.tkbcdn.com/ts/ds/60/3f/a7/bc973e9ddf8ffda64eeb7083bbead013.png",
     "location": {
-      "name": "The Executive Center Friendship Tower",
+      "venue": "The Executive Center Friendship Tower",
       "address": "31 Đ. Lê Duẩn, Bến Nghé, Quận 1, Hồ Chí Minh, Vietnam, Quận 2, Thành Phố Hồ Chí Minh"
     },
     "date": "13:30 - 17:30, 15 tháng 07, 2025",
@@ -90,7 +90,7 @@
     "price": 500000,
     "url": "https://salt.tkbcdn.com/ts/ds/11/4a/b6/be5444192015a9ef20015291c26b5d1e.jpg",
     "location": {
-      "name": "TRUNG TÂM HỘI NGHỊ CÔNG ĐOÀN, 1A YẾT KIÊU",
+      "venue": "TRUNG TÂM HỘI NGHỊ CÔNG ĐOÀN, 1A YẾT KIÊU",
       "address": "TP. HÀ NỘI, Phường Trần Hưng Đạo, Quận Hoàn Kiếm, Thành Phố Hà Nội"
     },
     "date": "08:00 - 18:00, 28 tháng 06, 2025",
@@ -102,7 +102,7 @@
     "price": 1299000,
     "url": "https://salt.tkbcdn.com/ts/ds/c6/2d/af/5164cf8339ff62ba0cca174a231250af.png",
     "location": {
-      "name": "Online Event",
+      "venue": "Online Event",
       "address": ""
     },
     "date": "00:00, 24 tháng 06, 2025 - 00:00, 07 tháng 07, 2025",
@@ -114,7 +114,7 @@
     "price": 500000,
     "url": "https://salt.tkbcdn.com/ts/ds/16/0c/22/724d57956ce809e63f0755670def936e.png",
     "location": {
-      "name": "Nhà Văn Hoá Thanh Niên",
+      "venue": "Nhà Văn Hoá Thanh Niên",
       "address": "4 Phạm Ngọc Thạch, Phường Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh"
     },
     "date": "18:00 - 23:00, 20 tháng 05, 2025",
@@ -126,7 +126,7 @@
     "price": 2000000,
     "url": "https://salt.tkbcdn.com/ts/ds/95/cf/d9/1ac481c86518d985464819d6248630a4.png",
     "location": {
-      "name": "Nhà thi đấu Nguyễn Du",
+      "venue": "Nhà thi đấu Nguyễn Du",
       "address": "116 Nguyễn Du, Phường Bến Thành, Quận 1, Thành Phố Hồ Chí Minh"
     },
     "date": "20:00 - 22:30, 07 tháng 03, 2025",
@@ -138,10 +138,10 @@
     "price": 1000000,
     "url": "https://salt.tkbcdn.com/ts/ds/a8/07/f5/ca3c72a1fb17f2c1c11ee871d7ee1b04.jpg",
     "location": {
-      "name": "Nhà hát Hồ Gươm",
+      "venue": "Nhà hát Hồ Gươm",
       "address": "40 Hàng Bài, Thành Phố Hà Nội"
     },
     "date": "20:00 - 23:00, 25 tháng 07, 2025",
-    "description": "Hàng trăm món ăn từ các quốc gia cùng không gian văn hóa đặc sắc và âm nhạc đường phố."
+    "description": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
   }
 ]

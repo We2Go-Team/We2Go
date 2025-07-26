@@ -1,8 +1,8 @@
 .ticket-detail {
+    min-height: 100vh;
     height: fit-content;
     display: flex;
     justify-content: center;
-    align-items: center;
     margin-top: 40px;
 }
 
@@ -11,51 +11,87 @@
 }
 
 .ticket-image {
+    flex-basis: 50%;
     height: 100%;
-    flex-basis: 60%;
+    position: sticky;
+    top: 4%;
 }
 
 .ticket-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     border-radius: 20px;
 }
 
+.ticket-image .price {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 0px;
+    position: relative;
+    gap: 10px;
+}
 
-.ticket {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    background-color: red;
+.ticket-image .price h3 {
+    font-size: 1.8em;
+    margin: 0;
+    line-height: 1.5em;
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+    font-weight: bold;
+}
+
+.buy-actions {
+    display: flex;
+    align-items: center;
+}
+
+.buy-actions button {
+    border: none;
+    padding: 10px 45px;
+    border-radius: 8px;
+    background-color: black;
+    color: white;
+}
+
+.ticket-image .price .line{
+    height: 50px;
+    width: 1px;
+    background-color: #ddd;
+    top: 0;
+
+}
+
+.ticket-content {
+    /* background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); */
     display: flex;
     flex-direction: column;
-
-    padding: 30px;
+    padding-right: 50px;
     transform-style: preserve-3d;
 }
 
-
 .ticket-header {
- 
     position: relative;
     z-index: 2;
 }
 
 .event-name {
-
     font-weight: 700;
     font-size: 24px;
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
+    line-height: 29px;
+    text-transform: uppercase;
 }
 
 .event-date {
     font-size: 16px;
     color: #666;
-    margin-bottom: 20px;
+    margin-bottom: 10px
 }
-
-
 
 .ticket-details {
     position: relative;
@@ -65,15 +101,42 @@
 
 .ticket-desc {
     margin-top: 20px;
-    max-width: 50vw!important;
+    max-width: 50vw !important;
+    text-align: justify;
 }
 
-.location {
+.ticket-desc .description {
     font-size: 14px;
     color: #666;
     margin-bottom: 10px;
     display: flex;
-    margin-bottom: 0;
+    text-align: justify;
+}
+
+.ticket-location {
+    padding: 8px 0px;
+}
+
+.ticket-location .location {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    display: flex;
+    margin: 0;
+}
+
+.ticket-location .location:nth-child(1) {
+    font-weight: 600;
+    font-size: 1.3em;
+    display: flex;
+}
+
+.ticket-location .location:nth-child(2) {
+ 
+}
+
+.ticket-location .location.location-name i {
+    width: 35px;
 }
 
 .ticket-number {

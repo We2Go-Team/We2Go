@@ -46,25 +46,6 @@ def tickets_page():
     tickets_sorted = sorted(tickets, key=lambda x: parse_vietnamese_event_time(x["date"]) or datetime.max)
     return render_template('pages/tickets.html', show_header=True, tickets=tickets_sorted)
 
-@tickets.route('/search', methods=['GET', 'POST'])
-def tickets_search_page():
-    data_path = os.path.join(os.path.dirname(__file__), '..', 'static', 'data', 'data.json')
-    with open(data_path, 'r', encoding='utf-8') as f:
-        tickets = json.load(f)
-
-    keyword = request.args.get('q', '').strip().lower() if request.method == 'GET' else request.form.get('q', '').strip().lower()
-
-    if keyword:
-        tickets = [
-            ticket for ticket in tickets
-            if keyword in ticket.get('name', '').lower()
-        ]
-
-    # Sort regardless of whether tickets is empty
-    tickets_sorted = sorted(tickets, key=lambda x: parse_vietnamese_event_time(x["date"]) or datetime.max)
-
-    return render_template('pages/tickets.html', show_header=True, tickets=tickets_sorted)
-
 @tickets.route('/<alias>', methods=['GET'])
 def ticket_detail_page(alias):
     data_path = os.path.join(os.path.dirname(__file__), '..', 'static', 'data', 'data.json')
@@ -75,4 +56,49 @@ def ticket_detail_page(alias):
     return render_template('pages/ticket_detail.html', show_header=True, ticket=ticket)
 
 
+@tickets.route('/search', methods=['GET', 'POST'])
+def tickets_search_page():
+
+
+    data_path = os.path.join(os.path.dirname(__file__), '..', 'static', 'data', 'data.json')
+    with open(data_path, 'r', encoding='utf-8') as f:
+        tickets = json.load(f)
+
+    # Lấy các tham số từ form hoặc query string
+    method = request.method
+    get_value = lambda key: (request.args if method == 'GET' else request.form).get(key, '').strip().lower()
+    keyword = get_value('q')
+    location = get_value('location')
+    price_range = get_value('price')  # 'under_1m', 'over_1m'
+    category = get_value('category')
+
+    # Lọc theo từ khóa
+    if keyword:
+        tickets = [t for t in tickets if keyword in t.get('name', '').lower()]
+
+    # Lọc theo địa điểm tổ chức
+    if location and location != 'toàn quốc':
+        tickets = [t for t in tickets if location.lower() in t.get('location', {}).get('address', '').lower()]
+
+    # Lọc theo giá tiền
+    if price_range:
+        def price_filter(t):
+            price = t.get('price', 0)
+            if price_range == 'under_1m':
+                return price < 1000000
+            elif price_range == 'over_1m':
+                return price >= 1000000
+            return True
+        tickets = [t for t in tickets if price_filter(t)]
+
+    # Lọc theo thể loại
+    if category:
+        tickets = [t for t in tickets if category in t.get('type', '').lower()]
+
+    # Sắp xếp thời gian
+    tickets_sorted = sorted(tickets, key=lambda x: parse_vietnamese_event_time(x.get("date", "")) or datetime.max)
+
+    
+
+    return render_template('pages/tickets.html', show_header=True, tickets=tickets_sorted)
 

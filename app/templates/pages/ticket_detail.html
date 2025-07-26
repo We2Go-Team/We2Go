@@ -4,84 +4,34 @@
 
 {% block content %}
 
-<div class="ticket-detail container">
-    <div class="ticket">
-        <div class="ticket-header">
-            <h1 class="event-name">{{ticket.name}}</h1>
-            <p class="event-date">{{ticket.date}}</p>
-        </div>
+<div class="container">
+    <div class="ticket-detail">
+        <div class="ticket-content">
+            <div class="ticket-header">
+                <p class="event-date">{{ticket.date}}</p>
+                <h1 class="event-name">{{ticket.name}}</h1>
 
-        <div class="ticket-location">
-            <p class="location"><i class="fas fa-map-marker-alt"></i>{{ticket.location.name}}</p>
-            <p class="location"><i class="fas fa-ticket-alt"></i>{{ticket.location.address}}</p>
+            </div>
+
+            <div class="ticket-location">
+                <p class="location location-name">{{ticket.location.venue}}</p>
+                <p class="location"><i class="fas fa-ticket-alt"></i>{{ticket.location.address}}</p>
+            </div>
+            <div class="ticket-desc">
+                {{ ticket.description | safe }}
+            </div>
         </div>
-        <div class="ticket-desc">
-            <p class="location"><i class="fas fa-map-marker-alt"></i>Lorem Ipsum is simply dummy text of the
-                printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever
-                since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                specimen book. It has survived not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
-                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.</p>
+        <div class="ticket-image">
+            <div class=""></div>
+            <img src="{{ticket.url}}" alt="QR Code">
+            <div class="price">
+                <h3>{{ "{:,.0f}".format(ticket.price).replace(",", ".") }}đ</h3>
+                <div class="line"></div>
+                <div class="buy-actions">
+                    <button class="buy">Đặt vé ngay</button>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="ticket-image">
-        <img src="{{ticket.url}}" alt="QR Code">
     </div>
 </div>
-
-<script>
-    // Create floating particles
-    function createParticles() {
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 20;
-
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-
-            // Random position
-            const posX = Math.random() * 100;
-            const delay = Math.random() * 15;
-            const size = Math.random() * 4 + 2;
-
-            particle.style.left = `${posX}%`;
-            particle.style.animationDelay = `${delay}s`;
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-
-            particlesContainer.appendChild(particle);
-        }
-    }
-
-    // Simulate loading progress
-    let progress = 0;
-    const loadingText = document.querySelector('.loading-text');
-    const loadingSubtext = document.querySelector('.loading-subtext');
-
-    const interval = setInterval(() => {
-        progress += Math.random() * 15;
-
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(interval);
-
-            // Update text when loading completes
-            loadingText.textContent = "TICKET READY";
-            loadingSubtext.textContent = "Your event access is confirmed";
-
-            // After a short delay, you can redirect or show main content
-            setTimeout(() => {
-                // window.location.href = 'main.html';
-                console.log('Loading complete!');
-            }, 1500);
-        }
-    }, 300);
-
-    // Initialize
-    window.onload = function () {
-        createParticles();
-    };
-</script>
-
 {% endblock %}
