@@ -9,6 +9,7 @@ auth = Blueprint('auth', __name__)
 def register():
     if request.method == 'POST':
         formData = request.get_json() # Get data from body request
+        print(formData)
         auth_services.register(formData)
         return redirect(url_for('auth.login'))
     return render_template('pages/register.html')
@@ -21,4 +22,4 @@ def login():
         auth_services.login(formData)
         return render_template('pages/home.html')
     else :
-        return render_template('pages/login.html', show_header=False)
+        return render_template('pages/login.html', show_header=False, show_footer=False)

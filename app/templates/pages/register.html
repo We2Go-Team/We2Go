@@ -6,10 +6,10 @@
 <main>
     <div class="register-page">
         <div class="background-image">
-            <img src="{{ url_for('static', filename='images/register_bg.png') }}" alt="My Image" >
+            <img src="{{ url_for('static', filename='images/register_bg.png') }}" alt="My Image">
         </div>
         <div class="register-form">
-            <div class="change-type-regis">
+            <div class="change-type-regis" data-selected="personal">
                 <input type="radio" class="btn-check" name="options" id="personal" autocomplete="off" checked
                     onclick="handleSelect(this)">
                 <label class="btn btn-primary" for="personal">Cá nhân</label>
@@ -35,7 +35,7 @@
                     <input type="password" placeholder="Xác nhận mật khẩu" />
                 </div>
                 <div class="lg-actions mt-2">
-                    <button class="register-btn-confirm">
+                    <button class="register-btn-confirm" onclick="onRegister()">
                         Đăng kí
                     </button>
                     <!-- <p><span>Hoặc</span></p>
@@ -46,7 +46,8 @@
             <div class="register-form-container" id="form-organization">
                 <div class="title">
                     <h3>Đăng kí tài khoản nhà tổ chức / doanh nghiệp</h3>
-                    <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go. Chúng tôi đồng hành cùng bạn trên hành trình tổ chức sự kiện chuyên nghiệp, hiệu quả và dễ dàng hơn bao giờ hết.</p>
+                    <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go. Chúng tôi đồng hành cùng bạn trên
+                        hành trình tổ chức sự kiện chuyên nghiệp, hiệu quả và dễ dàng hơn bao giờ hết.</p>
                 </div>
                 <div class="lg-form">
                     <div class="input-group">
@@ -77,7 +78,7 @@
                     <input type="password" placeholder="Xác nhận mật khẩu" />
                 </div>
                 <div class="lg-actions mt-2">
-                    <button class="register-btn-confirm">
+                    <button class="register-btn-confirm" onclick="onRegister()">
                         Đăng kí
                     </button>
                     <!-- <p><span>Hoặc</span></p>
@@ -89,6 +90,23 @@
 </main>
 
 <script>
+    var data = {
+        type: document.querySelector
+    }
+
+    function onRegister() {
+        const data = {
+            email: '',
+            password: "",
+            type: ""
+        }
+
+        const type = document.querySelector(".change-type-regis").getAttribute('data-selected')
+  
+        alert("some thing oke")
+    }
+
+
     function handleSelect(radio) {
         const isOrganization = radio.id === 'organization';
         const label1 = document.querySelector('label[for="personal"]');
@@ -117,8 +135,16 @@
     document.getElementById('personal').addEventListener('change', function () {
 
         if (this.checked) {
+
+            // Changes Form by type
             document.getElementById('form-personal').style.display = 'block';
             document.getElementById('form-organization').style.display = 'none';
+
+            // Add class active
+            const type = document.querySelector(".change-type-regis").attributes('selected')
+            console.log(type)
+            document.getElementById('form-personal').classList.add("type-selected")
+            document.getElementById('form-organization').classList.remove("type-selected")
         }
     });
 
@@ -126,8 +152,14 @@
         if (this.checked) {
             document.getElementById('form-personal').style.display = 'none';
             document.getElementById('form-organization').style.display = 'block';
+
+            // Add class active
+            document.getElementById('form-organization').classList.add("type-selected")
+            document.getElementById('form-personal').classList.remove("type-selected")
         }
     });
+
+    
 </script>
 
 {% endblock %}

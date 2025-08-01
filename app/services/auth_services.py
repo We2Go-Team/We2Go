@@ -5,9 +5,10 @@ from app.validators.user_validator import validate_user_register_data
 
 def register(data: dict):
     # validate data
-    validate_user_register_data(data)
-
+    # validate_user_register_data(data)
+    
     hashed_password = generate_password_hash(data.get("password"))
+
     user = User(
         first_name=data.get("first_name", ""),
         last_name=data.get("last_name", ""),
@@ -17,6 +18,8 @@ def register(data: dict):
         phone=data.get("phone", ""),
         role=data.get("role", "USER")
     )
+
+    
     return user_repository.create_user(user)
 
 def login(data: dict):
