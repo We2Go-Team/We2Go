@@ -9,7 +9,7 @@
             <img src="{{ url_for('static', filename='images/register_bg.png') }}" alt="My Image">
         </div>
         <div class="register-form">
-            <div class="change-type-regis" data-selected="personal">
+            <div class="change-type-regis" data-selected="PERSONAL">
                 <input type="radio" class="btn-check" name="options" id="personal" autocomplete="off" checked
                     onclick="handleSelect(this)">
                 <label class="btn btn-primary" for="personal">Cá nhân</label>
@@ -19,93 +19,87 @@
                 <label class="btn btn-light" for="organization">Tổ chức</label>
             </div>
 
-            <div class="register-form-container" id="form-personal">
-                <div class="title">
-                    <h3>Đăng kí tài khoản cá nhân</h3>
-                    <p>Chào mừng đến với We2Go, vui lòng tạo tài khoản của bạn bằng cách điền thông tin bên dưới.</p>
-                </div>
-                <div class="lg-form">
-                    <div class="input-group">
-                        <input type="text" placeholder="Họ" />
-                        <input type="text" placeholder="Tên" />
-                    </div>
-                    <input type="text" placeholder="Số điện thoại" />
-                    <input type="text" placeholder="Nhập địa chỉ email" />
-                    <input type="password" placeholder="Nhập mật khẩu" />
-                    <input type="password" placeholder="Xác nhận mật khẩu" />
-                </div>
-                <div class="lg-actions mt-2">
-                    <button class="register-btn-confirm" onclick="onRegister()">
-                        Đăng kí
-                    </button>
-                    <!-- <p><span>Hoặc</span></p>
-                    <div class="gg-register-btn">Đăng nhập với google</div> -->
-                </div>
-            </div>
-
-            <div class="register-form-container" id="form-organization">
-                <div class="title">
-                    <h3>Đăng kí tài khoản nhà tổ chức / doanh nghiệp</h3>
-                    <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go. Chúng tôi đồng hành cùng bạn trên
-                        hành trình tổ chức sự kiện chuyên nghiệp, hiệu quả và dễ dàng hơn bao giờ hết.</p>
-                </div>
-                <div class="lg-form">
-                    <div class="input-group">
-                        <input type="text" placeholder="Họ" />
-                        <input type="text" placeholder="Tên" />
-                    </div>
-                    <input type="text" placeholder="Tên doanh nghiệp / nhà tổ chức" />
-                    <div class="input-group">
-                        <input type="text" placeholder="Mã số thuế" />
-                        <select class="form-select" aria-label="Default select example">
-                            <option value="" disabled selected hidden>Chọn lĩnh vực hoạt động</option>
-                            <option value="entertainment">Giải trí / Sự kiện</option>
-                            <option value="travel">Du lịch / Lữ hành</option>
-                            <option value="education">Giáo dục / Đào tạo</option>
-                            <option value="conference">Hội thảo / Triển lãm</option>
-                            <option value="cinema">Rạp phim / Chiếu phim</option>
-                            <option value="sports">Thể thao / Giải đấu</option>
-                            <option value="music">Âm nhạc / Biểu diễn</option>
-                            <option value="food">Ẩm thực / Lễ hội ẩm thực</option>
-                            <option value="health">Y tế / Sức khỏe</option>
-                            <option value="others">Khác</option>
-                        </select>
+            <form action="" id="register-form-personal" method="POST">
+                <!-- PERSONAL FORM -->
+                <div class="register-form-container" id="form-personal">
+                    <div class="title">
+                        <h3>Đăng kí tài khoản cá nhân</h3>
+                        <p>Chào mừng đến với We2Go, vui lòng tạo tài khoản của bạn bằng cách điền thông tin bên dưới.
+                        </p>
                     </div>
 
-                    <input type="text" placeholder="Số điện thoại" />
-                    <input type="text" placeholder="Nhập địa chỉ email" />
-                    <input type="password" placeholder="Nhập mật khẩu" />
-                    <input type="password" placeholder="Xác nhận mật khẩu" />
-                </div>
-                <div class="lg-actions mt-2">
-                    <button class="register-btn-confirm" onclick="onRegister()">
-                        Đăng kí
-                    </button>
-                    <!-- <p><span>Hoặc</span></p>
+                    <div class="lg-form">
+                        <div class="input-group">
+                            <input type="text" placeholder="Họ" name="first_name" />
+                            <input type="text" placeholder="Tên" name="last_name" />
+                        </div>
+                        <input type="text" placeholder="Số điện thoại" name="phone" />
+                        <input type="text" placeholder="Nhập địa chỉ email" name="email" />
+                        <input type="password" placeholder="Nhập mật khẩu" name="password" />
+                        <input type="password" placeholder="Xác nhận mật khẩu" />
+                    </div>
+
+                    <div class="lg-actions mt-2">
+                        <button class="register-btn-confirm" type="submit">
+                            Đăng kí
+                        </button>
+                        <!-- <p><span>Hoặc</span></p>
                     <div class="gg-register-btn">Đăng nhập với google</div> -->
+                    </div>
                 </div>
-            </div>
+            </form>
+            <form action="" id="register-form-organization" method="POST"></form>
+                <!-- ORGANIZATION FORM -->
+                <div class="register-form-container" id="form-organization">
+                    <div class="title">
+                        <h3>Đăng kí tài khoản nhà tổ chức / doanh nghiệp</h3>
+                        <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go. Chúng tôi đồng hành cùng bạn
+                            trên
+                            hành trình tổ chức sự kiện chuyên nghiệp, hiệu quả và dễ dàng hơn bao giờ hết.</p>
+                    </div>
+                    <div class="lg-form">
+                        <div class="input-group">
+                            <input type="text" placeholder="Họ" id="last_name" />
+                            <input type="text" placeholder="Tên" id="first_name" />
+                        </div>
+                        <input type="text" placeholder="Tên doanh nghiệp / nhà tổ chức" />
+                        <div class="input-group">
+                            <input type="text" placeholder="Mã số thuế" />
+                            <select class="form-select" aria-label="Default select example">
+                                <option value="" disabled selected hidden>Chọn lĩnh vực hoạt động</option>
+                                <option value="entertainment">Giải trí / Sự kiện</option>
+                                <option value="travel">Du lịch / Lữ hành</option>
+                                <option value="education">Giáo dục / Đào tạo</option>
+                                <option value="conference">Hội thảo / Triển lãm</option>
+                                <option value="cinema">Rạp phim / Chiếu phim</option>
+                                <option value="sports">Thể thao / Giải đấu</option>
+                                <option value="music">Âm nhạc / Biểu diễn</option>
+                                <option value="food">Ẩm thực / Lễ hội ẩm thực</option>
+                                <option value="health">Y tế / Sức khỏe</option>
+                                <option value="others">Khác</option>
+                            </select>
+                        </div>
+
+                        <input type="text" placeholder="Số điện thoại" id="phone" name="phone" />
+                        <input type="text" placeholder="Nhập địa chỉ email" id="email" name="email" />
+                        <input type="password" placeholder="Nhập mật khẩu" id="password" name="password" />
+                        <input type="password" placeholder="Xác nhận mật khẩu" id="confirm-password" />
+                    </div>
+                    <div class="lg-actions mt-2">
+                        <button class="register-btn-confirm" type="submit">
+                            Đăng kí
+                        </button>
+                        <!-- <p><span>Hoặc</span></p>
+                        <div class="gg-register-btn">Đăng nhập với google</div> -->
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 </main>
 
 <script>
-    var data = {
-        type: document.querySelector
-    }
-
-    function onRegister() {
-        const data = {
-            email: '',
-            password: "",
-            type: ""
-        }
-
-        const type = document.querySelector(".change-type-regis").getAttribute('data-selected')
-  
-        alert("some thing oke")
-    }
-
 
     function handleSelect(radio) {
         const isOrganization = radio.id === 'organization';
@@ -132,6 +126,30 @@
         }
     }
 
+    document.getElementById("register-form-personal").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        // convert FormData → object
+        const data = Object.fromEntries(formData.entries());
+        data.type = document.querySelector(".change-type-regis").getAttribute("data-selected")
+
+
+        // gửi request
+        fetch("/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(result => {
+                
+            })
+            .catch(err => console.error("Error:", err));
+    });
+
     document.getElementById('personal').addEventListener('change', function () {
 
         if (this.checked) {
@@ -141,10 +159,8 @@
             document.getElementById('form-organization').style.display = 'none';
 
             // Add class active
-            const type = document.querySelector(".change-type-regis").attributes('selected')
-            console.log(type)
-            document.getElementById('form-personal').classList.add("type-selected")
-            document.getElementById('form-organization').classList.remove("type-selected")
+            const type = document.querySelector(".change-type-regis").getAttribute('data-selected')
+
         }
     });
 
@@ -154,12 +170,10 @@
             document.getElementById('form-organization').style.display = 'block';
 
             // Add class active
-            document.getElementById('form-organization').classList.add("type-selected")
-            document.getElementById('form-personal').classList.remove("type-selected")
+            const type = document.querySelector(".change-type-regis").getAttribute('data-selected')
         }
     });
 
-    
 </script>
 
 {% endblock %}

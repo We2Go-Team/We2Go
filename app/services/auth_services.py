@@ -3,9 +3,15 @@ from app.models.user import User
 from app.repositories import user_repository
 from app.validators.user_validator import validate_user_register_data
 
+
 def register(data: dict):
-    # validate data
-    # validate_user_register_data(data)
+    
+    print(data)
+    if user_repository.get_user_by_email(data["email"]):
+        raise ValueError("Email already exists")
+    if user_repository.get_user_by_phone(data["phone"]):
+        raise ValueError("Phone already exists")
+    
     
     hashed_password = generate_password_hash(data.get("password"))
 
@@ -16,8 +22,11 @@ def register(data: dict):
         password=hashed_password,
         avatar=data.get("avatar", ""),
         phone=data.get("phone", ""),
-        role=data.get("role", "USER")
+        role=data.get("role", "USER"),
+        type=data.get("type", "PERSONAL")
     )
+    
+    
 
     
     return user_repository.create_user(user)

@@ -1,5 +1,5 @@
 class UserRegisterDTO:
-    REQUIRED_FIELDS = ["email", "password", "first_name", "last_name"]
+    REQUIRED_FIELDS = ["email", "password", "first_name", "last_name", "phone", "type"]
 
     def __init__(self, data):
         missing = [f for f in self.REQUIRED_FIELDS if not data.get(f)]
