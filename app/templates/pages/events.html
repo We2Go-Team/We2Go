@@ -1,0 +1,178 @@
+{% extends "layout.html" %}
+
+{% block title %}Sự kiện{% endblock %}
+
+{% block content %}
+
+<div class="events">
+    <div class="container">
+        <div class="events-header">
+            <div class="filter-container">
+                <button onclick="toggleForm(event, 'filter-form')" class="toggle-button">
+                    <i class="bi bi-funnel"></i>
+                    Bộ lọc
+                </button>
+                <div class="filter-menu hidden" id="filter-form">
+                    <div class="filter-title">Bộ lọc</div>
+
+                    <div class="filter-section" data-filter="location">
+                        <div class="filter-section-title">Địa điểm tổ chức</div>
+                        <div class="filter-options">
+                            <div class="filter-option active">Toàn quốc</div>
+                            <div class="filter-option">Hồ Chí Minh</div>
+                            <div class="filter-option">Hà Nội</div>
+                            <div class="filter-option">Đà Lạt</div>
+                            <div class="filter-option">Đà Nẵng</div>
+                            <div class="filter-option">Nước ngoài</div>
+                            <div class="filter-option">Vị trí khác</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section" data-filter="price">
+                        <div class="filter-section-title">Giá tiền</div>
+                        <div class="filter-options">
+                            <div class="filter-option price-option active" data-value="all">Tất cả</div>
+                            <div class="filter-option price-option" data-value="under_1m">Dưới 1 triệu</div>
+                            <div class="filter-option price-option" data-value="over_1m">Lớn hơn 1 triệu</div>
+                        </div>
+                    </div>
+
+                    <div class="filter-section" data-filter="category">
+                        <div class="filter-section-title">Thể loại</div>
+                        <div class="filter-options">
+                            <div class="filter-option category-option active" data-value="all">Tất cả</div>
+                            <div class="filter-option category-option" data-value="concert">Âm nhạc</div>
+                            <div class="filter-option category-option" data-value="gaming">Gaming</div>
+                            <div class="filter-option category-option" data-value="sports">Thể thao</div>
+                            <div class="filter-option category-option" data-value="technologies">Công nghệ</div>
+                            <div class="filter-option category-option" data-value="fan meeting">Fan Meeting</div>
+                        </div>
+                    </div>
+
+
+                    <div class="btn-actions">
+                        <button class="reset-btn">Thiết lập lại</button>
+                        <button id="filter-form-submit" class="confirm-btn">Áp dụng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="events-list">
+            {% if events|length > 0 %}
+            <div class="events-inner">
+                {% for event in events %}
+                <div class="event-item">
+                    {% set event=event %}
+                    {% include "components/event_card.html" %}
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="not-found">
+                <img src="{{ url_for('static', filename='images/not_found.jpg') }}" alt="My Image" width="300">
+                <h3>Không tìm thấy vé sự kiện phù hợp.</h3>
+                <p>Bạn vui lòng điều chỉnh thông tin để có thể tìm kiếm chính xác hơn nhé !</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleForm(event, idTarget) {
+        const form = document.getElementById(idTarget);
+        const button = event.currentTarget;
+        if (form && button) {
+            form.classList.toggle('hidden');
+            button.classList.toggle('active');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterOptions = document.querySelectorAll('.filter-option');
+        const applyBtn = document.getElementById('filter-form-submit');
+
+        // 1. Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationParam = urlParams.get("location");
+        const priceParam = urlParams.get("price");
+        const categoryParam = urlParams.get("category");
+
+        // 2. Xử lý LOCATION
+        if (locationParam) {
+            const locationOptions = document.querySelectorAll('[data-filter="location"] .filter-option');
+            locationOptions.forEach(opt => {
+                if (opt.textContent.trim().toLowerCase() === decodeURIComponent(locationParam).toLowerCase()) {
+                    locationOptions.forEach(o => o.classList.remove("active"));
+                    opt.classList.add("active");
+                }
+            });
+        }
+
+        // 3. Xử lý PRICE
+        if (priceParam) {
+            const priceOptions = document.querySelectorAll('.price-option');
+            priceOptions.forEach(opt => {
+                if (opt.dataset.value === priceParam) {
+                    priceOptions.forEach(o => o.classList.remove("active"));
+                    opt.classList.add("active");
+                }
+            });
+        }
+
+        // 4. Xử lý CATEGORY
+        if (categoryParam) {
+            const categoryOptions = document.querySelectorAll('.category-option');
+            categoryOptions.forEach(opt => {
+                if (opt.dataset.value === categoryParam) {
+                    categoryOptions.forEach(o => o.classList.remove("active"));
+                    opt.classList.add("active");
+                }
+            });
+        }
+
+        // Add click event to the apply button
+        applyBtn.addEventListener('click', function () {
+            const location = document.querySelector('[data-filter="location"] .filter-option.active')?.innerText.trim() || '';
+            const price = document.querySelector('[data-filter="price"] .filter-option.active')?.dataset.value || '';
+            const category = document.querySelector('[data-filter="category"] .filter-option.active')?.dataset.value || '';
+
+            const params = new URLSearchParams({
+                location,
+                price,
+                category
+            });
+
+            window.location.href = `/events/search?${params.toString()}`;
+        });
+
+        // Add click event to each filter option
+        filterOptions.forEach(option => {
+            option.addEventListener('click', function () {
+                const parent = this.parentElement;
+                parent.querySelectorAll('.filter-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+
+                // Add active class to clicked option
+                this.classList.add('active');
+            });
+        });
+
+        // Reset button functionality
+        const resetBtn = document.querySelector('.reset-btn');
+        resetBtn.addEventListener('click', function () {
+            // Reset all options to default
+            document.querySelectorAll('.filter-option').forEach(option => {
+                option.classList.remove('active');
+            });
+
+            // Set default active options
+            document.querySelector('.filter-options').firstElementChild.classList.add('active');
+            document.querySelector('.filter-section:nth-child(2) .filter-options .filter-option:first-child').classList.add('active');
+            document.querySelector('.filter-section:nth-child(3) .filter-options .filter-option:first-child').classList.add('active');
+        });
+    });
+</script>
+
+{% endblock %}

@@ -36,16 +36,19 @@ CREATE TABLE `categories` (
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
 CREATE TABLE `events` (
   `id` char(36) NOT NULL DEFAULT uuid(),
   `title` varchar(255) DEFAULT NULL,
   `description` mediumtext DEFAULT NULL,
+  `images` text DEFAULT NULL,
+  `min_price` double DEFAULT NULL,
   `organizer_id` char(36) DEFAULT NULL,
   `time_start` datetime DEFAULT NULL,
   `time_end` datetime DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
-  `status` enum('Upcoming','Ongoing','Completed','Cancelled') DEFAULT NULL,
+  `venue` varchar(255) DEFAULT NULL,
+  `status` enum('UPCOMING','ONGOING','COMPLETED','CANCELLED') DEFAULT NULL,
+  `alias` varchar(255) DEFAULT NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}Sự kiện{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="event-detail">
+        <div class="event-content">
+            <div class="event-header">
+                <p class="event-date">{{event.date}}</p>
+                <h1 class="event-name">{{event.title}}</h1>
+
+            </div>
+
+            <div class="event-location">
+                <p class="location location-name">{{ event.venue or "Chưa rõ" }}</p>
+                <p class="location"><i class="fas fa-event-alt"></i>{{event.location}}</p>
+            </div>
+            <div class="event-desc">
+                {{ event.description | safe }}
+            </div>
+        </div>
+        <div class="event-image">
+            <div class=""></div>
+            <img src="{{ event.images if event.images else url_for('static', filename='images/image_not_found.jpg') }}"
+                alt="{{ event.title }}">
+            <div class="price">
+                {% if event.min_price %}
+                <h3 class="price">Giá từ: {{ "{:,.0f}".format(event.min_price).replace(",", ".") }}đ</h3>
+                {% else %}
+                <h3 class="price">Đang cập nhật</h3>
+                {% endif %}
+                <div class="line"></div>
+                <div class="buy-actions">
+                    <button class="buy">Đặt vé ngay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

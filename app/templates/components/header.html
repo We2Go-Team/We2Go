@@ -2,7 +2,7 @@
     <nav class="container">
         <ul>
             <li><a href="/">Trang chủ</a></li>
-            <li><a href="/tickets">Sự kiện</a></li>
+            <li><a href="/events">Sự kiện</a></li>
             <li><a href="/about">Giới thiệu</a></li>
             <li><a href="/contact">Liên hệ</a></li>
         </ul>
@@ -28,7 +28,7 @@
     function onSearch() {
         const keyword = document.getElementById("search-input").value.trim();
         if (keyword) {
-            window.location.href = `/tickets/search?q=${encodeURIComponent(keyword)}`;
+            window.location.href = `/events/search?q=${encodeURIComponent(keyword)}`;
         }
     }
 </script>

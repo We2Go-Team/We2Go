@@ -1,0 +1,34 @@
+<div class="event-card" onclick="viewDetail(event, '{{ event.title }}')">
+    <img src="{{ event.images if event.images else url_for('static', filename='images/image_not_found.jpg') }}"
+        alt="{{ event.title }}">
+
+    <div class="info">
+        <p class="name">{{event.title}}</p>
+        {% if event.min_price %}
+        <p class="price">Giá từ: {{ "{:,.0f}".format(event.min_price).replace(",", ".") }}đ</p>
+        {% else %}
+        <p class="price">Đang cập nhật</p>
+        {% endif %}
+        <p class="date text-truncate"><i class="bi bi-calendar-event"></i>{{event.date}}</p>
+    </div>
+</div>
+
+<script>
+    function slugify(text) {
+        return text
+            .replace(/đ/g, 'd')                       // xử lý chữ đ thường
+            .replace(/Đ/g, 'd')                       // xử lý chữ Đ hoa
+            .normalize('NFD')                         // tách dấu
+            .replace(/[\u0300-\u036f]/g, '')          // xóa dấu
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s-]/g, '')             // xóa ký tự đặc biệt
+            .replace(/[\s_-]+/g, '-')                 // thay khoảng trắng và _ thành -
+            .replace(/^-+|-+$/g, '');                 // xóa dấu - đầu/cuối
+    }
+    function viewDetail(event, name) {
+        event.preventDefault();
+        const alias = slugify(name);
+        window.location.href = `/events/${alias}`;
+    }
+</script>
