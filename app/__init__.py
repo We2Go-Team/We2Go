@@ -8,9 +8,9 @@ def create_app():
     mysql_config(app)
     app.secret_key = 'your-very-secret-key-123456789'
     # Cấu hình Routes
-    from .routes import home, auth, tickets
+    from .routes import home, auth, events
     app.register_blueprint(home)
     app.register_blueprint(auth)
-    app.register_blueprint(tickets)
+    app.register_blueprint(events)
     
     return app
