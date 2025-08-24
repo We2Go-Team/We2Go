@@ -1,0 +1,52 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Thông tin sự kiện{% endblock %}
+
+{% block content %}
+
+<div class="event_detail_management">
+    <div class="event_detail_header">
+        
+    </div>
+    <div class="event_detail-main">
+        <div class="info-container">
+            <div class="title">
+                <h4>Thông tin sự kiện</h4>
+            </div>
+            <div class="infomation">
+                <h3>{{event.title}}</h3>
+                <div class="time-date">
+                    <p class="time"><span>Thời gian tổ chức: </span>{{event.time_start}}</p>
+                    <p class="venue">{{event.venue}}</p>
+                    <p>{{event.location}}</p>
+                </div>
+
+                <div class="desc">
+                    <h4 class="title">Mô tả sự kiện</h4>
+                    <div class="desc-inner">
+                        {{ event.description|safe }}
+                    </div>
+                </div>
+
+                <div class="organization">
+                    <h4 class="title">Thông tin ban tổ chức</h4>
+                    <div class="organization-inner">
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="event_detail-container">
+            <div class="image">
+                <img src="{{ event.images }}" alt="{{ event.title }}">
+            </div>
+            <div class="categories"></div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

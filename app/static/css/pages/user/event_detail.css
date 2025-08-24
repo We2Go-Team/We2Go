@@ -11,7 +11,8 @@
 }
 
 .event-image {
-    flex-basis: 50%;
+    flex-basis: 75%;
+    flex-shrink: 1;
     height: 100%;
     position: sticky;
     top: 4%;
@@ -29,18 +30,28 @@
     display: flex;
     justify-content: flex-end;
     padding: 20px 0px;
+    padding-bottom: 10px;
     position: relative;
-    gap: 10px;
+    gap: 20px;
+    align-items: center;
 }
 
 .event-image .price h3 {
-    font-size: 1.8em;
+    font-size: 2.2em;
     margin: 0;
-    line-height: 1.5em;
+    justify-content: flex-end;
+    line-height: 1.0em;
     display: flex;
-    align-items: center;
-    opacity: 0.8;
+    color: #e63946;
     font-weight: bold;
+    font-family: "Roboto Flex", sans-serif;
+}
+
+.event-image .price h3 span {
+    color: #666;
+    font-size: 16px;
+    text-transform: uppercase;
+    
 }
 
 .buy-actions {
@@ -59,7 +70,7 @@
 .event-image .price .line{
     height: 50px;
     width: 1px;
-    background-color: #ddd;
+    background-color: #dddddd67;
     top: 0;
 
 }

@@ -1,0 +1,183 @@
+[class^="tbl-col-"] {
+    flex: 0 0 auto;
+    /* Không co giãn */
+}
+
+/* Các cột phần trăm */
+.tbl-col-5 {
+    width: 5%;
+}
+
+.tbl-col-10 {
+    width: 10%;
+}
+
+.tbl-col-15 {
+    width: 15%;
+}
+
+.tbl-col-20 {
+    width: 20%;
+}
+
+.tbl-col-25 {
+    width: 25%;
+}
+
+.tbl-col-30 {
+    width: 30%;
+}
+
+.tbl-col-33 {
+    width: 33.3333%;
+}
+
+.tbl-col-40 {
+    width: 40%;
+}
+
+.tbl-col-50 {
+    width: 50%;
+}
+
+.tbl-col-60 {
+    width: 60%;
+}
+
+.tbl-col-66 {
+    width: 66.6666%;
+}
+
+.tbl-col-70 {
+    width: 70%;
+}
+
+.tbl-col-75 {
+    width: 75%;
+}
+
+.tbl-col-80 {
+    width: 80%;
+}
+
+.tbl-col-90 {
+    width: 90%;
+}
+
+.tbl-col-100 {
+    width: 100%;
+}
+
+
+
+.is-invalid {
+    border: 1px solid rgb(245, 68, 68) !important;
+}
+
+
+/* Alert Styles */
+.alert {
+    width: fit-content;
+    padding: 1rem 1.25rem;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    position: relative;
+    font-weight: 500;
+    animation: bounceInRight 0.8s forwards;
+
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.alert {
+    transition: opacity 0.5s ease;
+}
+
+.alert.fade {
+    animation: bounceOutRight 1s forwards;
+}
+
+/* Bounce từ phải -> đứng yên */
+@keyframes bounceInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+
+    60% {
+        opacity: 1;
+        transform: translateX(-10px);
+    }
+
+    80% {
+        transform: translateX(5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Bounce ra ngoài sang phải */
+@keyframes bounceOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+
+    20% {
+        transform: translateX(-5px);
+    }
+
+    40% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+}
+
+
+
+.alert-success {
+    background-color: #f0fdf4;
+    border-color: #22c55e;
+    color: #15803d;
+}
+
+.alert-danger {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+    color: #dc2626;
+}
+
+.alert-warning {
+    background-color: #fffbeb;
+    border-color: #f59e0b;
+    color: #d97706;
+}
+
+.alert-info {
+    background-color: #eff6ff;
+    border-color: #3b82f6;
+    color: #2563eb;
+}
+
+.alert-success::before {
+    background-color: #22c55e;
+}
+
+.alert-danger::before {
+    background-color: #ef4444;
+}
+
+.alert-warning::before {
+    background-color: #f59e0b;
+}
+
+.alert-info::before {
+    background-color: #3b82f6;
+}

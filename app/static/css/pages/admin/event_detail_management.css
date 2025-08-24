@@ -1,0 +1,103 @@
+    .event_detail_management {
+        height: 100%;
+        width: 100%;
+    }
+
+    .event_detail_header {
+        height: 50px;
+        background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+
+    .event_detail-main {
+        display: flex;
+        gap: 20px;
+        background-color: white;
+        border-radius: 10px;
+        padding: 3% 3%;
+    }
+
+    .event_detail-container {
+        flex-basis: 45%;
+        flex-shrink: 1;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .event_detail-container .image {
+        width: 100%;
+        flex-shrink: 1;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .event_detail-container .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .event_detail-container .categories {
+        width: 100%;
+        flex-grow: 1;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+
+
+    .info-container {
+        flex-grow: 1;
+        background-color: white;
+        border-radius: 10px;
+        flex-basis: 45%;
+        flex-shrink: 1;
+
+    }
+
+    .info-container div.title {
+        margin-bottom: 30px;
+    }
+
+    .info-container .infomation h3 {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .info-container .infomation .desc .desc-inner {
+        background-color: rgba(224, 223, 224, 0.267);
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .info-container .infomation .desc .title {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .info-container .infomation .desc {
+        margin-bottom: 20px;
+
+    }
+
+    .info-container .infomation p.venue {
+        font-weight: 600;
+    }
+
+    .info-container .infomation p.time {
+        margin-bottom: 10px;
+        color: orange;
+    }
+
+    .info-container .infomation p.time span {
+        font-weight: 600;
+        color: black !important;
+    }
+
+    .info-container .infomation .time-date {
+        margin-bottom: 30px;
+
+    }

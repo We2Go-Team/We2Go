@@ -5,9 +5,27 @@ from app.repositories.event_repository import EventRepository
 
 
 class EventService:
+    
+    @staticmethod
+    def create_event(data: dict):
+        event = Event(
+            title=data.get("title"),
+            alias=data.get("alias"),
+            description=data.get("description"),
+            organizer_id=data.get("organizer_id"),
+            time_start=data.get("time_start"),
+            time_end=data.get("time_end"),
+            location=data.get("location"),
+            venue=data.get("venue"),
+            images=data.get("images"),
+            min_price=data.get("min_price", 0),
+            status=data.get("status")  
+        )
+        return EventRepository.create_event(event)
+    
     @staticmethod
     def get_all_events():
-        return EventRepository.get_all_events()
+        return EventRepository.get_all_events(True)
 
     @staticmethod
     def get_event_by_alias(alias: str):
@@ -36,3 +54,7 @@ class EventService:
     @staticmethod
     def search_events(keyword=None, location=None, price_range=None, category=None):
         return EventRepository.search(keyword, location, price_range, category)
+    
+    @staticmethod
+    def get_event_categories(event_id):
+        return EventRepository.get_event_categories(event_id)

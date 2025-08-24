@@ -1,0 +1,39 @@
+<div class="table_management">
+  <div class="title">Quản lý vé sự kiện</div>
+
+  <div class="table-container">
+    <!-- Header -->
+    <div class="tbl-header">
+      <div class="tbl-row">
+        {% for h in headers %}
+        <div class="tbl-label {{ h.class }}">{{ h.label }}</div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="tbl-body">
+      {% for row in data %}
+      <a  href="{{ url_for('dashboard.event_detail_page', alias = row.alias) }}">
+        <div class="tbl-row">
+          {% for h in headers %}
+          <div class="tbl-label {{ h.class }}">
+            {% if h.field == "event" %}
+            <p class="name">{{ row.event.name }}</p>
+            <p class="type">{{ row.event.type }}</p>
+            {% elif h.field == "location" %}
+            <p class="venue">{{ row.location.venue }}</p>
+            <p class="address">{{ row.location.address }}</p>
+            {% elif h.field == "status" %}
+            <p class="badge">{{ row.status }}</p>
+            {% else %}
+            <p>{{ row[h.field] }}</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

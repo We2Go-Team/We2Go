@@ -69,12 +69,12 @@ def events_page():
         key=lambda x: parse_vietnamese_event_time(x["date"]) or datetime.max
     )
 
-    return render_template("pages/events.html", show_header=True, events=events_sorted)
+    return render_template("pages/user/events.html", show_header=True, events=events_sorted)
 
 @events.route('/<alias>', methods=['GET'])
 def events_detail_page(alias):
     event = EventService.get_event_by_alias(slugify(alias)) 
-    return render_template('pages/event_detail.html', show_header=True, event=event)
+    return render_template('pages/user/event_detail.html', show_header=True, event=event)
 
 @events.route('/search', methods=['GET', 'POST'])
 def events_search_page():
@@ -93,5 +93,5 @@ def events_search_page():
         category=category
     )
    
-    return render_template('pages/events.html', show_header=True, events=events)
+    return render_template('pages/user/events.html', show_header=True, events=events)
 

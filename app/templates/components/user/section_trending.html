@@ -1,0 +1,48 @@
+<section class="section-trending" id="{{ section_id }}">
+    <div class="title">
+        <h2>Sự kiện phổ biến</h2>
+        <p>Khám phá các sự kiện phổ biến sắp tới</p>
+    </div>
+    <div class="glider-contain">
+        <div class="glider glider-{{ section_id }}">
+            {% for event in trending_events %}
+                {% set event=event  %}
+                {% include "components/user/event_card.html" %}
+            {% endfor %}
+        </div>
+
+        <button class="glider-prev glider-prev-{{ section_id }}"><i class="bi bi-chevron-compact-left"></i></button>
+        <button class="glider-next glider-next-{{ section_id }}"><i class="bi bi-chevron-compact-right"></i></button>
+    </div>
+</section>
+
+<script>
+    window.addEventListener('load', function () {
+        new Glider(document.querySelector('.glider-{{ section_id }}'), {
+            slidesToShow: 4,
+            slidesToScroll: 4,
+            draggable: true,
+            dots: '.dots',
+            arrows: {
+                prev: '.glider-prev-{{ section_id }}',
+                next: '.glider-next-{{ section_id }}'
+            },
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 4,
+                        slidesToScroll: 4
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    });
+</script>

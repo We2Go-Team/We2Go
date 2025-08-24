@@ -1,0 +1,178 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Thông tin sự kiện{% endblock %}
+
+{% block content %}
+
+
+<div class="event_form">
+    <div class="event_form-actions">
+        <button type="submit" form="eventForm" class="create" form="eventForm">
+            <div data-lucide="save"></div>
+        </button>
+    </div>
+    <form method="POST" action="/dashboard/event/new" id="eventForm" enctype="multipart/form-data">
+        <div class="event_form-container">
+            <div class="event_form-main">
+                <div class="title">
+                    <h3>Tạo nội dung sự kiện</h3>
+                    <p> Vui lòng nhập mô tả chi tiết về sự kiện (nội dung, khách mời, giá trị mang lại...). </p>
+                    <p>Nội dung này sẽ hiển thị trong trang sự kiện công khai.</p>
+                </div>
+                <div class="form-data">
+                    <div class="input-field">
+                        <p>Hình ảnh</p>
+                        <div class="image-container">
+                            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo Image" height="300"
+                                id="default-img">
+                            <img src="{{ form_data.images if form_data and form_data.images else '' }}" id="preview" />
+                            <button type="button" class="img-delete">
+                                <div data-lucide="x"></div>
+                            </button>
+                        </div>
+                        <input type="file" name="images" id="img" />
+                    </div>
+
+                    <div class="input-field">
+                        <p>Tên sự kiện</p>
+                        <input type="text" name="title" id="title" value="{{ form_data.title if form_data else '' }}"
+                            class="{% if 'title' in missing_fields %}is-invalid{% endif %}" />
+                    </div>
+
+                    <div class="input-field">
+                        <p>Tên định danh</p>
+                        <input type="text" name="alias" id="alias" readonly
+                            value="{{ form_data.alias if form_data else '' }}" />
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-field">
+                            <p>Thời gian tổ chức</p>
+                            <div class="group" style="display: flex; flex-grow: 1; gap: 10px;">
+                                <input type="date" name="start_date" placeholder="Chọn ngày tổ chức"
+                                    value="{{ form_data.start_date if form_data else '' }}"
+                                    class="{% if 'start_date' in missing_fields %}is-invalid{% endif %}" />
+                                <input type="time" name="start_time" placeholder="Giờ bắt đầu"
+                                    value="{{ form_data.start_time if form_data else '' }}"
+                                    class="{% if 'start_time' in missing_fields %}is-invalid{% endif %}" />
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <p>Thời gian kết thúc</p>
+                            <div style="display: flex; gap: 20px;">
+                                <div class="group" style="display: flex; flex-grow: 1; gap: 10px;">
+                                    <input type="date" name="end_date" placeholder="Chọn ngày tổ chức"
+                                        value="{{ form_data.end_date if form_data else '' }}"
+                                        class="{% if 'end_date' in missing_fields %}is-invalid{% endif %}" />
+                                    <input type="time" name="end_time" placeholder="Giờ kết thúc"
+                                        value="{{ form_data.end_time if form_data else '' }}"
+                                        class="{% if 'end_time' in missing_fields %}is-invalid{% endif %}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-field">
+                            <p>Địa điểm tổ chức (Tòa nhà, sân vận động ...)</p>
+                            <input type="text" name="venue" placeholder="Địa điểm tổ chức sự kiện"
+                                value="{{ form_data.venue if form_data else '' }}"
+                                class="{% if 'venue' in missing_fields %}is-invalid{% endif %}" />
+                        </div>
+                        <div class="input-field">
+                            <p>Địa chỉ cụ thể</p>
+                            <input type="text" name="location" placeholder="Địa chỉ cụ thể ( tên đường, thành phố )"
+                                value="{{ form_data.location if form_data else '' }}"
+                                class="{% if 'location' in missing_fields %}is-invalid{% endif %}" />
+                        </div>
+                    </div>
+
+                    <div class="input-field">
+                        <p>Mô tả sự kiện</p>
+                        {{ ckeditor.create() }}
+                        {{ ckeditor.config(name='description', value=form_data.description if form_data else '') }}
+                        {% if 'description' in missing_fields %}
+
+                        {% endif %}
+                    </div>
+
+                    <div class="event_form-actions">
+                        <button type="submit" class="create">
+                            <div data-lucide="save"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="event_form-ticket">
+                <div class="title">
+                    <h3>Cấu hình vé tham dự</h3>
+                    <p>Thêm các khu vực tổ chứ và loại vé tham dự</p>
+                    <p>Nội dung này sẽ hiển thị trong trang sự kiện công khai.</p>
+                </div>
+                <div class="form-data">
+                    <div class="input-field">
+                        <div class="label">
+                            <p>Cấu hình khu vực tổ chức</p>
+                            <button type="button">Thêm khu vực</button>
+                        </div>
+                        
+                        
+                        <div class="zone-table">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    const input = document.getElementById("img");
+    const preview = document.getElementById("preview");
+    const deleteBtn = document.querySelector(".img-delete");
+    const title = document.getElementById("title");
+    const alias = document.getElementById("alias");
+    const defaultImg = document.getElementById("default-img");
+
+
+    // Hàm tạo slug
+    const slugify = text => text
+        .replace(/đ/g, "d").replace(/Đ/g, "d")           // thay "đ"
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")// bỏ dấu
+        .replace(/[^\w\s-]/g, "")                        // bỏ ký tự đặc biệt
+        .trim().toLowerCase()
+        .replace(/[\s_-]+/g, "-");                       // space/underscore => "-"
+
+    // Cập nhật alias theo title
+    title?.addEventListener("input", e => {
+        alias.value = slugify(e.target.value);
+    });
+
+    // Chọn ảnh => hiện ảnh + nút xóa
+    // Khi chọn ảnh
+    input.addEventListener("change", e => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = ev => {
+            preview.src = ev.target.result;
+            preview.style.display = "block";
+            defaultImg.style.display = "none";   // ẩn logo mặc định
+            deleteBtn.style.display = "inline-block";
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Xóa ảnh => ẩn ảnh + ẩn nút
+    deleteBtn.addEventListener("click", () => {
+        preview.src = "";
+        input.value = "";
+        deleteBtn.classList.remove("has-image");
+    });
+</script>
+
+
+{% endblock %}

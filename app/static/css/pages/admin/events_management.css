@@ -1,0 +1,50 @@
+.events_management {
+    height: 100%;
+}
+
+.events_management .actions {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.events_management .actions button {
+    padding: 8px 30px;
+    cursor: pointer;
+    border-radius: 6px;
+    outline: none;
+    border: none;
+}
+
+.events_management .actions button a {
+    color: white;
+}
+
+
+.events_management .actions button:hover {
+    opacity: 1!important;
+}
+
+.events_management .actions button.create {
+    background-color: green;
+    color: white;
+    opacity: 0.8;
+}
+
+.events_management .actions button.delete {
+    background-color: red;
+    color: white;
+    opacity: 0.8;
+}
+
+.events-section .main {
+    min-height: 400px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 20px;
+}

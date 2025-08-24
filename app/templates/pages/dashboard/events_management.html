@@ -1,0 +1,22 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Quản lý vé{% endblock %}
+
+{% block content %}
+
+<div class="events_management">
+    <div class="events-section">
+        <div class="actions">
+            <button class="delete">xóa</button>
+            <button class="create"><a href="/dashboard/event/new">Tạo mới</a></button>
+        </div>
+        <div class="main">
+            {% set title = "Quản lý vé sự kiện" %}
+            {% set data = events %}
+            {% set headers = headers %}
+            {% include "components/admin/table_management.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

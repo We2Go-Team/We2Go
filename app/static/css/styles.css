@@ -3,20 +3,35 @@
 /* Base Styles Import */
 @import "./base/globel.css";
 @import "./base/fonts.css";
+@import "./base/classes.css";
+
+@import "./layouts/dashboard_layout.css";
+
+/* User Components Styles Import */
+@import "./components/user/header.css";
+@import "./components/user/banner.css";
+@import "./components/user/footer.css";
+@import "./components/user/section_highlight.css";
+@import "./components/user/section_categories.css";
+@import "./components/user/section_trending.css";
+@import "./components/user/event_card.css";
+
+/* User Pages Styles Import */
+@import "./pages/user/login.css";
+@import "./pages/user/register.css";
+@import "./pages/user/event_detail.css";
+@import "./pages/user/events.css";
+
+/* Admin Components Styles Import */
+@import "./components/admin/sidebar.css";
+@import "./components/admin/table_management.css";
+
+/* Admin Pages Styles Import */
+@import "./pages/admin/events_management.css";
+@import "./pages/admin/event_detail_management.css";
+@import "./pages/admin/event_form.css";
 
 
+/* Shared Component */
+@import "./components/shared/notify.css";
 
-/* Components Styles Import */
-@import "./components/header.css";
-@import "./components/banner.css";
-@import "./components/footer.css";
-@import "./components/section_highlight.css";
-@import "./components/section_categories.css";
-@import "./components/section_trending.css";
-@import "./components/event_card.css";
-
-/* Pages Styles Import */
-@import "./pages/login.css";
-@import "./pages/register.css";
-@import "./pages/event_detail.css";
-@import "./pages/events.css";

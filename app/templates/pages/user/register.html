@@ -1,0 +1,133 @@
+{% extends "layouts/layout.html" %}
+
+{% block title %}Đăng nhập{% endblock %}
+
+{% block content %}
+<main>
+    <div class="register-page">
+        <div class="background-image">
+            <img src="{{ url_for('static', filename='images/register_bg.png') }}" alt="My Image" >
+        </div>
+        <div class="register-form">
+            <div class="change-type-regis">
+                <input type="radio" class="btn-check" name="options" id="personal" autocomplete="off" checked
+                    onclick="handleSelect(this)">
+                <label class="btn btn-primary" for="personal">Cá nhân</label>
+
+                <input type="radio" class="btn-check" name="options" id="organization" autocomplete="off"
+                    onclick="handleSelect(this)">
+                <label class="btn btn-light" for="organization">Tổ chức</label>
+            </div>
+
+            <div class="register-form-container" id="form-personal">
+                <div class="title">
+                    <h3>Đăng kí tài khoản cá nhân</h3>
+                    <p>Chào mừng đến với We2Go, vui lòng tạo tài khoản của bạn bằng cách điền thông tin bên dưới.</p>
+                </div>
+                <div class="lg-form">
+                    <div class="input-group">
+                        <input type="text" placeholder="Họ" />
+                        <input type="text" placeholder="Tên" />
+                    </div>
+                    <input type="text" placeholder="Số điện thoại" />
+                    <input type="text" placeholder="Nhập địa chỉ email" />
+                    <input type="password" placeholder="Nhập mật khẩu" />
+                    <input type="password" placeholder="Xác nhận mật khẩu" />
+                </div>
+                <div class="lg-actions mt-2">
+                    <button class="register-btn-confirm">
+                        Đăng kí
+                    </button>
+                    <!-- <p><span>Hoặc</span></p>
+                    <div class="gg-register-btn">Đăng nhập với google</div> -->
+                </div>
+            </div>
+
+            <div class="register-form-container" id="form-organization">
+                <div class="title">
+                    <h3>Đăng kí tài khoản nhà tổ chức / doanh nghiệp</h3>
+                    <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go. Chúng tôi đồng hành cùng bạn trên hành trình tổ chức sự kiện chuyên nghiệp, hiệu quả và dễ dàng hơn bao giờ hết.</p>
+                </div>
+                <div class="lg-form">
+                    <div class="input-group">
+                        <input type="text" placeholder="Họ" />
+                        <input type="text" placeholder="Tên" />
+                    </div>
+                    <input type="text" placeholder="Tên doanh nghiệp / nhà tổ chức" />
+                    <div class="input-group">
+                        <input type="text" placeholder="Mã số thuế" />
+                        <select class="form-select" aria-label="Default select example">
+                            <option value="" disabled selected hidden>Chọn lĩnh vực hoạt động</option>
+                            <option value="entertainment">Giải trí / Sự kiện</option>
+                            <option value="travel">Du lịch / Lữ hành</option>
+                            <option value="education">Giáo dục / Đào tạo</option>
+                            <option value="conference">Hội thảo / Triển lãm</option>
+                            <option value="cinema">Rạp phim / Chiếu phim</option>
+                            <option value="sports">Thể thao / Giải đấu</option>
+                            <option value="music">Âm nhạc / Biểu diễn</option>
+                            <option value="food">Ẩm thực / Lễ hội ẩm thực</option>
+                            <option value="health">Y tế / Sức khỏe</option>
+                            <option value="others">Khác</option>
+                        </select>
+                    </div>
+
+                    <input type="text" placeholder="Số điện thoại" />
+                    <input type="text" placeholder="Nhập địa chỉ email" />
+                    <input type="password" placeholder="Nhập mật khẩu" />
+                    <input type="password" placeholder="Xác nhận mật khẩu" />
+                </div>
+                <div class="lg-actions mt-2">
+                    <button class="register-btn-confirm">
+                        Đăng kí
+                    </button>
+                    <!-- <p><span>Hoặc</span></p>
+                    <div class="gg-register-btn">Đăng nhập với google</div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    function handleSelect(radio) {
+        const isOrganization = radio.id === 'organization';
+        const label1 = document.querySelector('label[for="personal"]');
+        const label2 = document.querySelector('label[for="organization"]');
+        if (isOrganization) {
+            label1.classList.remove("btn-primary");
+            label1.classList.add("btn-light");
+
+            label2.classList.remove("btn-light");
+            label2.classList.add("btn-primary");
+        } else {
+            label2.classList.remove("btn-primary");
+            label2.classList.add("btn-light");
+
+            label1.classList.remove("btn-light");
+            label1.classList.add("btn-primary");
+        }
+
+        // ✅ Hiển thị thêm trường dành cho tổ chức (nếu muốn)
+        const orgFields = document.getElementById("org-fields");
+        if (orgFields) {
+            orgFields.style.display = isOrganization ? "block" : "none";
+        }
+    }
+
+    document.getElementById('personal').addEventListener('change', function () {
+
+        if (this.checked) {
+            document.getElementById('form-personal').style.display = 'block';
+            document.getElementById('form-organization').style.display = 'none';
+        }
+    });
+
+    document.getElementById('organization').addEventListener('change', function () {
+        if (this.checked) {
+            document.getElementById('form-personal').style.display = 'none';
+            document.getElementById('form-organization').style.display = 'block';
+        }
+    });
+</script>
+
+{% endblock %}
