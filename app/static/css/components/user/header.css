@@ -1,5 +1,6 @@
 header {
-
+    background-color: transparent;
+    overflow: hidden;
 }
 
 
@@ -81,7 +82,7 @@ header nav .search-bar button {
 
 header nav .search-bar button.login-btn {
     border: none;
-    background-color: red;
+    background-color: #e63946;
     color: white;
     padding: 8px 20px;
     border-radius: 20px;

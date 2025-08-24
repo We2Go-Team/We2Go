@@ -6,7 +6,9 @@
 }
 
 
-
+.desc-inner {
+    font-size: 0.9em !important
+}
 
 ol, ul {
 	list-style: none;
@@ -17,5 +19,5 @@ blockquote, q {
 }
 a {
     text-decoration: none !important;
-    color: black !important;
+    color: black ;
 }

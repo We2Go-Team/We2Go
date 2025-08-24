@@ -1,0 +1,27 @@
+<div class="notify">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const alerts = document.querySelectorAll(".alert");
+        alerts.forEach((alert, index) => {
+            const baseDelay = 3200;   // thời gian hiển thị cho alert đầu
+            const stepDelay = 1800;   // thêm bao lâu thì alert tiếp theo mới đóng
+
+            setTimeout(() => {
+                alert.classList.add("fade");
+                setTimeout(() => alert.remove(), 800); // chờ animation fade rồi xóa
+            }, baseDelay + index * stepDelay);
+        });
+    });
+</script>

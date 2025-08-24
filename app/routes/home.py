@@ -12,4 +12,4 @@ def home_page():
     with open(data_path, 'r', encoding='utf-8') as f:
         events = json.load(f)
 
-    return render_template('pages/home.html', show_header=True, trending_events=events)
+    return render_template('pages/user/home.html', show_header=True, trending_events=events)

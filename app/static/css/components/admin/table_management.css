@@ -1,0 +1,87 @@
+.table_management {
+    height: 100%;
+}
+
+.table_management .title {
+    margin-bottom: 20px;
+}
+
+.table-container .tbl-row {
+    background-color: #1d3457;
+    color: white;
+    display: flex;
+    height: 48px;
+    align-items: center;
+    border-radius: 8px;
+    padding: 0px 20px;
+}
+
+.table-container .tbl-label {
+    flex-grow: 1;
+}
+
+
+.table-container .tbl-header {
+    margin-bottom: 10px;
+}
+
+
+.table-container .tbl-body {}
+
+.table-container .tbl-body .tbl-row {
+    background-color: white;
+    cursor: pointer;
+    margin-bottom: 10px;
+    height: fit-content;
+    padding: 25px 20px;
+}
+
+.table-container .tbl-body .tbl-row:hover {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+}
+
+
+
+.table-container .tbl-body .tbl-row .label-name .name {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: black;
+    padding-right: 15%;
+   
+}
+
+.table-container .tbl-body .tbl-row .label-name .type {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.678);
+
+}
+
+.table-container .tbl-body .tbl-row .label-date p {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    color: black;
+}
+
+.table-container .tbl-body .tbl-row .label-location .venue {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+    color: rgba(0, 0, 0, 0.678);
+}
+
+.table-container .tbl-body .tbl-row .label-location .address {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.678);
+}
+
+.table-container .tbl-body .tbl-row .label-status .badge {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.678);
+    border: 1px solid #ddd;
+    width: fit-content;
+    padding: 6px 20px;
+    border-radius: 25px;
+}

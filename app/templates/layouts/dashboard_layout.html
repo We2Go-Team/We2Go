@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{% block title %}Trang Quản lí{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    {% set messages = get_flashed_messages(with_categories=true) %}
+    {{ ckeditor.load() }}
+
+
+    <div class="dashboard-layout">
+        {% include "components/shared/notify.html" %}
+        <div class="sidebar-container">
+            {% include "components/admin/sidebar.html" %}
+        </div>
+        <main>{% block content %}{% endblock %}</main>
+    </div>
+
+
+    <script>
+        var flashMessages = { messages };
+        if (Array.isArray(flashMessages)) {
+            flashMessages.forEach(function (item) {
+                var category = item[0];
+                var msg = item[1];
+                Swal.fire({
+                    icon: category === 'success' ? 'success' : 'error',
+                    title: msg,
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+    </script>
+</body>
+
+
+<script>
+    lucide.createIcons();
+    CKEDITOR.config.versionCheck = false;
+</script>
+
+</html>

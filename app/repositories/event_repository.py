@@ -4,6 +4,7 @@ from app.config.database import db
 from sqlalchemy import func, or_
 from sqlalchemy.orm import joinedload
 
+
 class EventRepository:
     @staticmethod
     def create_event(event: Event):
@@ -12,24 +13,36 @@ class EventRepository:
         return event
 
     @staticmethod
-    def get_all_events():
-        return Event.query.all()
+    def get_all_events(include_relationships=False):
+        query = Event.query
+        if include_relationships:
+            query = query.options(db.joinedload(Event.categories))
+        return query.all()
 
     @staticmethod
-    def get_event_by_id(event_id):
-        return Event.query.get(event_id)
+    def get_event_by_id(event_id, include_relationships=False):
+        query = Event.query
+        if include_relationships:
+            query = query.options(joinedload(Event.categories))
+        return query.get(event_id)
 
     @staticmethod
-    def get_event_by_alias(alias):
-        return Event.query.filter(func.lower(Event.alias) == alias.lower()).first()
+    def get_event_by_alias(alias, include_relationships=False):
+        query = Event.query.filter(func.lower(Event.alias) == alias.lower())
+        if include_relationships:
+            query = query.options(joinedload(Event.categories))
+        return query.first()
 
     @staticmethod
-    def get_event_by_location(location):
-        return Event.query.filter(func.lower(Event.location) == location.lower()).all()
+    def get_event_by_location(location, include_relationships=False):
+        query = Event.query.filter(func.lower(Event.location) == location.lower())
+        if include_relationships:
+            query = query.options(joinedload(Event.categories))
+        return query.all()
 
     @staticmethod
     def delete_event(event_id):
-        event = get_event_by_id(event_id)
+        event = EventRepository.get_event_by_id(event_id)
         if event:
             db.session.delete(event)
             db.session.commit()
@@ -38,7 +51,7 @@ class EventRepository:
 
     @staticmethod
     def update_event(event_id, **kwargs):
-        event = get_event_by_id(event_id)
+        event = EventRepository.get_event_by_id(event_id)
         if event:
             for key, value in kwargs.items():
                 if hasattr(event, key):
@@ -48,8 +61,9 @@ class EventRepository:
         return None
 
     @staticmethod
-    def search(keyword=None, location=None, price_range=None, category=None):
+    def search(keyword=None, location=None, price_range=None, category=None, include_relationships=True):
         query = Event.query
+
         # Lọc theo từ khóa (title)
         if keyword:
             query = query.filter(Event.title.ilike(f"%{keyword}%"))
@@ -74,4 +88,16 @@ class EventRepository:
         if category and category != "all":
             query = query.join(Event.categories).filter(Category.name.ilike(f"%{category}%"))
 
-        return query.options(joinedload(Event.categories)).order_by(Event.time_start.asc()).all()
+        # Luôn load categories nếu cần
+        if include_relationships:
+            query = query.options(joinedload(Event.categories))
+
+        return query.order_by(Event.time_start.asc()).all()
+
+    @staticmethod
+    def get_event_categories(event_id):
+        """Trả về danh sách category name của 1 event"""
+        event = EventRepository.get_event_by_id(event_id, include_relationships=True)
+        if not event:
+            return []
+        return [cat.name for cat in event.categories]

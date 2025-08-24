@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layouts/layout.html" %}
 
 {% block title %}Sự kiện{% endblock %}
 
@@ -63,7 +63,7 @@
                 {% for event in events %}
                 <div class="event-item">
                     {% set event=event %}
-                    {% include "components/event_card.html" %}
+                    {% include "components/user/event_card.html" %}
                 </div>
                 {% endfor %}
             </div>

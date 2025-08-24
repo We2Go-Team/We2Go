@@ -15,7 +15,5 @@ class Category(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     events = db.relationship(
-        "Event",
-        secondary=event_categories,
-        back_populates="categories"
+        "Event", secondary=event_categories, back_populates="categories"
     )

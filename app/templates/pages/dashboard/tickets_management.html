@@ -1,0 +1,15 @@
+{% extends "layouts/dashboard_layout.html" %}
+
+{% block title %}Quản lý vé{% endblock %}
+
+{% block content %}
+
+<div class="tickets_management">
+    <div class="tickets-section">
+        <div class="main">
+            {% include "components/admin/table_management.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

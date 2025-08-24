@@ -1,8 +1,8 @@
 from functools import wraps
-from flask import flash, redirect, url_for, request, jsonify
+from flask import flash, redirect, url_for, request, jsonify, render_template
 
 
-def catch_errors(redirect_on_error=None):
+def catch_errors():
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -12,16 +12,67 @@ def catch_errors(redirect_on_error=None):
                 error_msg = str(e)
             except AttributeError:
                 error_msg = "Invalid form data."
-            except Exception:
-                error_msg = "Unexpected error."
-                
-            if request.accept_mimetypes['application/json'] >= request.accept_mimetypes['text/html']:
-                return jsonify({ "success": False, "data": None ,"message": error_msg }), 400
+            except Exception as e:
+                error_msg = f"Unexpected error: {str(e)}"
 
-            # Nếu là form HTML SSR → flash lỗi + redirect hoặc render lại
-            # flash(error_msg, "danger")
-            # if redirect_on_error:
-            #     return redirect(url_for(redirect_on_error))
-            # return None 
+            # # Lấy form_data để route fill lại form
+            # form_data = request.form.to_dict()
+
+            # # Nếu client muốn JSON
+            # if request.headers.get("X-Requested-With") == "XMLHttpRequest":
+            #     return jsonify({"success": False, "data": form_data, "error_msg": error_msg}), 400
+
+            # # Nếu HTML → trả về dict cho route handle render template
+            # return {"error_msg": error_msg, "form_data": form_data}
+
+        return wrapper
+    return decorator
+
+def validate_dto_fields(dto_class, template, context_extra=None):
+    """
+    Decorator validate POST data dựa trên DTO (EventCreateDTO).
+    
+    - dto_class: class DTO (phải raise ValueError nếu thiếu field)
+    - template: template render lại khi có lỗi
+    - context_extra: dict thêm context tùy ý
+    """
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if request.method == "POST":
+                data_source = request.form.to_dict() if not request.is_json else request.json
+
+                # Chuyển description nếu dùng CKEditor
+                if "ckeditor" in data_source:
+                    data_source["description"] = data_source["ckeditor"]
+
+                try:
+                    # Tạo instance DTO (DTO sẽ tự validate tất cả field, bao gồm start/end date/time)
+                    dto_instance = dto_class(data_source)
+                except ValueError as e:
+                    # Lấy danh sách các field bị thiếu từ message
+                    msg = str(e)
+                    missing_fields = []
+                    if msg.startswith("Missing fields:"):
+                        missing_fields = [f.strip() for f in msg.replace("Missing fields:", "").split(",")]
+
+                    context = {
+                        "form_data": data_source,
+                        "error_msg": msg,
+                        "missing_fields": missing_fields
+                    }
+                    
+                    
+                    flash(" Tạo thất bại", "danger")
+                    flash(" vui lòng kiểm tra và điền đầy đủ thông tin cung cấp", "danger")
+                    
+                    if context_extra:
+                        context.update(context_extra)
+                    return render_template(template, **context)
+
+                # Nếu hợp lệ, gán dto_instance vào kwargs để route sử dụng
+                kwargs["dto_class"] = dto_instance
+
+            return func(*args, **kwargs)
         return wrapper
     return decorator

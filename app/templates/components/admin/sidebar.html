@@ -1,0 +1,52 @@
+<div class="sidebar">
+    <div class="sidebar-top">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo Image" width="300">
+        <p class="sidebar-title">Manage Your Workspace</p>
+    </div>
+    <div class="sidebar-menu" style="flex-basis: 40%;">
+        <div class="sidebar-menu__item">
+            <div data-lucide="layout-grid"></div>
+            <span>Tổng quan</span>
+        </div>
+        <div class="sidebar-menu__item">
+            <div data-lucide="chart-no-axes-combined"></div>
+            <span>Thống kê</span>
+        </div>
+        <div class="sidebar-menu__item">
+            <div data-lucide="calendar-1"></div>
+            <span>Lịch của bạn</span>
+        </div>
+        <div class="sidebar-menu__item">
+            <div data-lucide="party-popper"></div>
+            <span><a href="/dashboard/events">Sự kiện và vé</a></span>
+        </div>
+        <div class="sidebar-menu__item">
+            <div data-lucide="archive"></div>
+            <span>Quản lí đơn</span>
+        </div>
+
+    </div>
+    <div class="sidebar-menu">
+        <div class="sidebar-menu__item">
+            <div data-lucide="monitor-cog"></div>
+            <span>Cài đặt</span>
+        </div>
+        <div class="sidebar-menu__item">
+            <div data-lucide="info"></div>
+            <span>Hỗ trợ</span>
+        </div>
+    </div>
+    <div class="sidebar-bottom">
+        <div class="sidebar-bottom__user-card">
+            <div class="avartar">
+                <img src="https://cdn-useast1.kapwing.com/static/templates/scared-cat-meme-template-full-400dbb6d.webp"
+                    alt="ava">
+            </div>
+            <div class="info">
+                <p>User name</p>
+                <p>Manager</p>
+            </div>
+            <div data-lucide="log-out"></div>
+        </div>
+    </div>
+</div>
