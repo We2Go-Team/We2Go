@@ -85,7 +85,7 @@ def create_event(dto_class=None):
     global next_id
 
     if request.method == "POST":
-        
+
         # === Get form data ===
         title = request.form.get("title")
         alias = request.form.get("alias")
@@ -96,23 +96,30 @@ def create_event(dto_class=None):
         venue = request.form.get("venue")
         location = request.form.get("location")
         description = request.form.get("ckeditor")  # HTML
-
+        images = request.form.get("images")  # HTML
+        
+        
         # === Handle image upload ===
         image_url = None
+        if images != "":
+            image_url = images
+
         if "images" in request.files:
             file = request.files["images"]
             if file and file.filename != "":
-                upload_result = cloudinary.uploader.upload(
-                    file,
-                    folder="We2Go Upload"
-                )
+                file.stream.seek(0)
+                upload_result = cloudinary.uploader.upload(file, folder="We2Go Upload")
                 image_url = upload_result["secure_url"]
-
+            else:
+                # Không upload gì, giữ file cũ hoặc Base64 tạm
+                pass
         # === Convert date + time to datetime objects ===
         time_start = None
         time_end = None
         if start_date and start_time:
-            time_start = datetime.strptime(f"{start_date} {start_time}", "%Y-%m-%d %H:%M")
+            time_start = datetime.strptime(
+                f"{start_date} {start_time}", "%Y-%m-%d %H:%M"
+            )
         if end_date and end_time:
             time_end = datetime.strptime(f"{end_date} {end_time}", "%Y-%m-%d %H:%M")
 
@@ -122,35 +129,140 @@ def create_event(dto_class=None):
             "alias": alias,
             "description": description,
             "organizer_id": None,  # TODO: lấy từ session login
+            "start_date": start_date,
+            "end_date": end_date,
+            "start_time": start_time,
+            "end_time": end_time,
             "time_start": time_start,
             "time_end": time_end,
             "venue": venue,
             "location": location,
             "images": image_url,
             "min_price": float(request.form.get("min_price") or 0),
-            "status": "UPCOMING",  
+            "status": "UPCOMING",
         }
         
-        
-        print(data)
-
         # === Create event ===
-        EventService.create_event(data)
+        created_event = EventService.create_event(data)
         flash("Sự kiện đã được tạo!", "success")
-        # === Always return a response ===
-        return render_template(
-            "pages/dashboard/event_form.html",
-            title="Tạo sự kiện mới",
-            event=None,
-            success_msg="Sự kiện đã được tạo thành công!"
-        )
+
+        return  redirect(url_for('dashboard.preview_event', alias=created_event.alias))
 
     # === GET request ===
     return render_template(
-        "pages/dashboard/event_form.html",
-        title="Tạo sự kiện mới",
-        event=None
+        "pages/dashboard/event_form.html", title="Tạo sự kiện mới", event=None
     )
+
+
+@dashboard.route("/dashboard/event/preview/<alias>", methods=["GET", "POST"])
+@validate_dto_fields(EventCreateDTO, template="pages/dashboard/event_form.html")
+def preview_event(alias, dto_class=None):
+    # Lấy event từ service theo alias
+    event = EventService.get_event_by_alias(alias)
+
+    if request.method == "POST":
+        # === Lấy dữ liệu từ form ===
+        title = request.form.get("title")
+        alias = request.form.get("alias")
+        start_date = request.form.get("start_date")
+        start_time = request.form.get("start_time")
+        end_date = request.form.get("end_date")
+        end_time = request.form.get("end_time")
+        venue = request.form.get("venue")
+        location = request.form.get("location")
+        description = request.form.get("ckeditor")  # HTML
+        images = request.form.get("images")  # HTML
+
+        # === Handle image upload ===
+        image_url = images if images else event.images if event else None
+        if "images" in request.files:
+            file = request.files["images"]
+            if file and file.filename != "":
+                file.stream.seek(0)
+                upload_result = cloudinary.uploader.upload(file, folder="We2Go Upload")
+                image_url = upload_result["secure_url"]
+
+        # === Convert date + time ===
+        time_start = (
+            datetime.strptime(f"{start_date} {start_time}", "%Y-%m-%d %H:%M")
+            if start_date and start_time
+            else None
+        )
+        time_end = (
+            datetime.strptime(f"{end_date} {end_time}", "%Y-%m-%d %H:%M")
+            if end_date and end_time
+            else None
+        )
+
+        # === Build data dict ===
+        data = {
+            "title": title,
+            "alias": alias,
+            "description": description,
+            "organizer_id": event.organizer_id if event else None,
+            "start_date": start_date,
+            "end_date": end_date,
+            "start_time": start_time,
+            "end_time": end_time,
+            "time_start": time_start,
+            "time_end": time_end,
+            "venue": venue,
+            "location": location,
+            "images": image_url,
+            "min_price": float(request.form.get("min_price") or 0),
+            "status": "UPCOMING",
+        }
+
+        # === Create hoặc update event ===
+        if event:
+            updated_event = EventService.update_event(event.id, data)
+            flash("Sự kiện đã được cập nhật!", "success")
+            event_obj = updated_event
+        else:
+            created_event = EventService.create_event(data)
+            flash("Sự kiện đã được tạo!", "success")
+            event_obj = created_event
+            
+
+
+        return redirect(url_for('dashboard.preview_event', alias=updated_event.alias))
+       
+    time_start = event.time_start
+    time_end = event.time_end
+
+    # Tách ra ngày và giờ
+    start_date = time_start.strftime("%Y-%m-%d") if time_start else ""
+    start_time = time_start.strftime("%H:%M") if time_start else ""
+
+    end_date = time_end.strftime("%Y-%m-%d") if time_end else ""
+    end_time = time_end.strftime("%H:%M") if time_end else ""
+    # === GET request: render form với dữ liệu event ===
+    form_data = (
+        {
+            "title": event.title,
+            "alias": event.alias,
+            "start_date": start_date,
+            "start_time": start_time,
+            "end_date": end_date,
+            "end_time": end_time,
+            "venue": event.venue,
+            "location": event.location,
+            "description": event.description,
+            "images": event.images,
+            "min_price": event.min_price,
+            "status": event.status,
+        }
+        if event
+        else {}
+    )
+
+    return render_template(
+        "pages/dashboard/event_form.html",
+        title="Xem / Cập nhật sự kiện",
+        form_data=form_data,
+        event_id=event.id if event else None,
+    )
+
 
 # Trang quản lý sự kiện
 # @dashboard.route('/dashboard/events')

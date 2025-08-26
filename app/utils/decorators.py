@@ -1,5 +1,10 @@
 from functools import wraps
 from flask import flash, redirect, url_for, request, jsonify, render_template
+import base64
+from werkzeug.datastructures import FileStorage
+import io
+import cloudinary
+import cloudinary.uploader
 
 
 def catch_errors():
@@ -42,10 +47,16 @@ def validate_dto_fields(dto_class, template, context_extra=None):
             if request.method == "POST":
                 data_source = request.form.to_dict() if not request.is_json else request.json
 
+                if "images" in request.files:
+                    file = request.files["images"]
+                    if file and file.filename != "":
+                        upload_result = cloudinary.uploader.upload(file, folder="We2Go Upload")
+                        image_url = upload_result["secure_url"]
+                        data_source["images"] = image_url
+                    
                 # Chuyển description nếu dùng CKEditor
                 if "ckeditor" in data_source:
                     data_source["description"] = data_source["ckeditor"]
-
                 try:
                     # Tạo instance DTO (DTO sẽ tự validate tất cả field, bao gồm start/end date/time)
                     dto_instance = dto_class(data_source)
@@ -61,8 +72,7 @@ def validate_dto_fields(dto_class, template, context_extra=None):
                         "error_msg": msg,
                         "missing_fields": missing_fields
                     }
-                    
-                    
+                            
                     flash(" Tạo thất bại", "danger")
                     flash(" vui lòng kiểm tra và điền đầy đủ thông tin cung cấp", "danger")
                     

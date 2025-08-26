@@ -1,6 +1,6 @@
 {% extends "layouts/dashboard_layout.html" %}
 
-{% block title %}Thông tin sự kiện{% endblock %}
+{% block title %}Tạo sự kiện mới{% endblock %}
 
 {% block content %}
 
@@ -11,9 +11,14 @@
             <div data-lucide="save"></div>
         </button>
     </div>
-    <form method="POST" action="/dashboard/event/new" id="eventForm" enctype="multipart/form-data">
+    <form method="POST" action="{{ request.path }}" id="eventForm" enctype="multipart/form-data">
         <div class="event_form-container">
             <div class="event_form-main">
+                <div class="is-created">
+                    {% if event_id %}
+                    <span class="status">CREATED</span>
+                    {% endif %}
+                </div>
                 <div class="title">
                     <h3>Tạo nội dung sự kiện</h3>
                     <p> Vui lòng nhập mô tả chi tiết về sự kiện (nội dung, khách mời, giá trị mang lại...). </p>
@@ -22,15 +27,17 @@
                 <div class="form-data">
                     <div class="input-field">
                         <p>Hình ảnh</p>
+                        
                         <div class="image-container">
-                            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo Image" height="300"
-                                id="default-img">
+
                             <img src="{{ form_data.images if form_data and form_data.images else '' }}" id="preview" />
                             <button type="button" class="img-delete">
                                 <div data-lucide="x"></div>
                             </button>
                         </div>
-                        <input type="file" name="images" id="img" />
+                        <input name="images" value="{{ form_data.images if form_data else '' }}"  style="display: none;"/>
+                        <input type="file" name="images" id="img"
+                            value="{{ form_data.images if form_data and form_data.images else '' }}" />
                     </div>
 
                     <div class="input-field">
@@ -89,11 +96,9 @@
 
                     <div class="input-field">
                         <p>Mô tả sự kiện</p>
-                        {{ ckeditor.create() }}
-                        {{ ckeditor.config(name='description', value=form_data.description if form_data else '') }}
-                        {% if 'description' in missing_fields %}
 
-                        {% endif %}
+                        {{ ckeditor.create(value=form_data['description'] if form_data and form_data.get('description') else
+                        '') }}
                     </div>
 
                     <div class="event_form-actions">
@@ -113,12 +118,88 @@
                     <div class="input-field">
                         <div class="label">
                             <p>Cấu hình khu vực tổ chức</p>
-                            <button type="button">Thêm khu vực</button>
+                            <button type="button" class="create" id="add-zone">Thêm khu vực</button>
                         </div>
-                        
-                        
-                        <div class="zone-table">
 
+                        <div class="zone-setup">
+                            <div class="zone-container">
+                                <div class="zone-item">Zone A</div>
+                            </div>
+
+                            <!-- <div class="zone-card">
+                                <div class="label">
+                                    <p>Thông tin khu vực</p>
+                                    <div class="label-actions">
+                                        <button type="button" class="delete">Hủy</button>
+                                        <button type="button" class="create">Thêm</button>
+                                    </div>
+                                </div>
+                                <div class="input-field">
+                                    <p>Tên khu vực tổ chức</p>
+                                    <input type="text" name="title" id="title"
+                                        placeholder="Khu vực A, khu vực thường ...."
+                                        value="{{ form_data.title if form_data else '' }}"
+                                        class="{% if 'title' in missing_fields %}is-invalid{% endif %}" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-field flex-66">
+                                        <p>Thể loại</p>
+                                        <select id="zone-type" name="zone_type flex-66">
+                                            <option value="floor">Ghế ngồi</option>
+                                            <option value="balcony" selected>Tự do</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-field">
+                                        <p>Sức chứa</p>
+                                        <input type="number" name="zone_capacity" min="100"
+                                            value="{{ form_data.location if form_data else '' }}"
+                                            class="{% if 'location' in missing_fields %}is-invalid{% endif %}" />
+                                    </div>
+                                </div>
+                                <div class="input-field">
+                                    <p>Mô tả</p>
+                                    <input type="text" name="title" id="title"
+                                        placeholder="Mô tả khu vực: vị trí, hướng dẫn..."
+                                        value="{{ form_data.title if form_data else '' }}"
+                                        class="{% if 'title' in missing_fields %}is-invalid{% endif %}" />
+                                </div>
+
+                                <div class="input-field">
+                                    <p>Cấu hình vé </p>
+                                    <button type="button" class="create">Thêm loại vé</button>
+                                </div>
+                            </div>
+
+                            <div class="ticket-type">
+                                <div class="label">
+                                    <p>Thông tin loại vé</p>
+                                    <div class="label-actions">
+                                        <button type="button" class="delete">Hủy</button>
+                                        <button type="button" class="create">Tạo vé</button>
+                                    </div>
+
+                                </div>
+                                <div class="input-field">
+                                    <p>Tên, loại vé</p>
+                                    <input type="text" name="title" id="title" placeholder="Vé vip, vé thường ..."
+                                        value="{{ form_data.title if form_data else '' }}"
+                                        class="{% if 'title' in missing_fields %}is-invalid{% endif %}" />
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-field flex-66 ">
+                                        <p>Giá vé</p>
+                                        <input type="number" name="venue" placeholder="Giá vé" min="0"
+                                            value="{{ form_data.venue if form_data else '' }}"
+                                            class="{% if 'venue' in missing_fields %}is-invalid{% endif %}" />
+                                    </div>
+                                    <div class="input-field">
+                                        <p>Số lượng</p>
+                                        <input type="number" name="location" placeholder="số lượng" min="0"
+                                            value="{{ form_data.location if form_data else '' }}"
+                                            class="{% if 'location' in missing_fields %}is-invalid{% endif %}" />
+                                    </div>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -135,7 +216,17 @@
     const title = document.getElementById("title");
     const alias = document.getElementById("alias");
     const defaultImg = document.getElementById("default-img");
+    var event_id = '{{ event_id }}';
+    var form_data = '{{ form_data }}';
+    console.log(form_data);
+    // Zone Actions
+    const zoneContainer = document.querySelector(".zone-container");
+    const addZoneBtn = document.getElementById("add-zone");
+    let currentCharCode = "A".charCodeAt(0);
+    let zoneCount = 1;
 
+    
+    
 
     // Hàm tạo slug
     const slugify = text => text
@@ -150,7 +241,30 @@
         alias.value = slugify(e.target.value);
     });
 
-    // Chọn ảnh => hiện ảnh + nút xóa
+
+
+
+
+    addZoneBtn.addEventListener("click", () => {
+        // if(!event_id) {
+        //     alert("Bạn cần phải tạo sự kiện trước để cấu hình")
+        // }
+        // Tạo alphabet
+        const nextChar = String.fromCharCode(currentCharCode + zoneCount);
+
+        // Tạo div mới
+        const zoneItem = document.createElement("div");
+        zoneItem.className = "zone-item";
+        zoneItem.textContent = `Zone ${nextChar}`;
+
+        // Append vào container
+        zoneContainer.appendChild(zoneItem);
+
+        // tăng số lượng
+        zoneCount++;
+    });
+
+
     // Khi chọn ảnh
     input.addEventListener("change", e => {
         const file = e.target.files[0];
@@ -162,10 +276,10 @@
             preview.style.display = "block";
             defaultImg.style.display = "none";   // ẩn logo mặc định
             deleteBtn.style.display = "inline-block";
+            
         };
         reader.readAsDataURL(file);
     });
-
     // Xóa ảnh => ẩn ảnh + ẩn nút
     deleteBtn.addEventListener("click", () => {
         preview.src = "";
