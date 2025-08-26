@@ -21,7 +21,7 @@ class Event(db.Model):
 
     id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = db.Column(db.String(255), nullable=True)
-    description = db.Column(db.Text, nullable=True)
+    description = db.Column(db.Text, nullable=False)
     organizer_id = db.Column(
         UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=False
     )
@@ -36,7 +36,7 @@ class Event(db.Model):
     )
     min_price = db.Column(db.Float, nullable=True)
     alias = db.Column(db.String(255), unique=True, nullable=False)
-    images = db.Column(db.Text, nullable=True)
+    images = db.Column(db.Text, nullable=False)
     categories = db.relationship(
         "Category", secondary=event_categories, back_populates="events"
     )
@@ -66,7 +66,4 @@ def generate_alias(mapper, connection, target):
     if not target.alias and target.title:
         target.alias = slugify(target.title)
 
-@event.listens_for(Event, "before_update")
-def update_alias(mapper, connection, target):
-    if target.title:
-        target.alias = slugify(target.title)
+
