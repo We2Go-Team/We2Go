@@ -265,13 +265,12 @@
 .event_form .event_form-container .event_form-ticket .zone-setup .zone-container {
     flex-basis: 30%;
     min-height: 30%;
-    width: 100%;
-    border: 2px dashed #1f1e1e;
+    width: calc(100% + 10px);
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-   align-content: flex-start;  
+    align-content: flex-start;
 }
 
 .event_form .event_form-container .event_form-ticket .zone-setup .zone-item {
@@ -279,9 +278,45 @@
     height: 120px;
     display: flex;
     align-items: center;
-    background-color: #ddd;
     justify-content: center;
     border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: 0.22s background-color ease-in-out;
+    text-align: center;
+    padding: 2%;
+}  
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item.active {
+    background-color: #1e3557;
+    color: white;
+    font-weight: 600;
+    user-select: none;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item:hover {
+    outline: 4px solid #1e3557;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item .remove {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    cursor: pointer;
+    color: rgba(41, 40, 40, 0.733);
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+    border-radius: 50%;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item .remove svg{
+    width: 20px;
+    height: 20px;
 }
 
 .event_form .event_form-container .event_form-ticket .zone-setup .zone-card {
@@ -308,4 +343,47 @@
     background-color: white;
     border: 1px solid #ddd;
     gap: 10px;
+}
+
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions {
+    padding: 0px 4%;
+}
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions .title {
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions ul li {
+    flex-basis: calc(50% - 20px);
+}
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions ul li p {
+
+    letter-spacing: 0.8px;
+    font-size: 0.9em;
+    padding: 4px 0px;
+    text-align: justify;
+}
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions ul li p::before {
+    content: "⭑";
+    width: 10px;
+    height: 10px;
+    margin-right: 8px;
+}
+
+.event_form .event_form-container .event_form-ticket .terms-and-conditions ul h4 {
+    font-size: 1.1em;
+    margin-bottom: 4px;
+    text-transform: uppercase;
 }

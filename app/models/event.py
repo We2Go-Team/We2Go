@@ -2,7 +2,7 @@
 import uuid
 from datetime import datetime
 from app.config.database import db
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.mysql import CHAR
 from sqlalchemy import Enum, event
 import enum
 from app.models.event_category import event_categories
@@ -19,11 +19,11 @@ class EventStatus(enum.Enum):
 class Event(db.Model):
     __tablename__ = "events"
 
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(CHAR(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     title = db.Column(db.String(255), nullable=True)
     description = db.Column(db.Text, nullable=False)
     organizer_id = db.Column(
-        UUID(as_uuid=True), db.ForeignKey("users.id"), nullable=False
+        CHAR(36), db.ForeignKey("users.id"), nullable=False
     )
     time_start = db.Column(db.DateTime, nullable=False)
     time_end = db.Column(db.DateTime, nullable=False)

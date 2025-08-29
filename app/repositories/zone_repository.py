@@ -1,5 +1,6 @@
 # app/repositories/zone_repository.py
 
+import uuid
 from app.models.zone import Zone
 from app.config.database import db
 from sqlalchemy import func
@@ -25,8 +26,8 @@ class ZoneRepository:
 
     @staticmethod
     def get_zones_by_event(event_id):
-        """Lấy tất cả zone thuộc một event"""
-        return Zone.query.filter(Zone.event_id == event_id).all()
+        """Lấy tất cả zone thuộc một event"""        
+        return Zone.query.filter(Zone.event_id == event_id).order_by(Zone.name.asc()).all()
 
     @staticmethod
     def get_zone_by_name(event_id, name):
