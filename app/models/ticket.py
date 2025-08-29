@@ -7,9 +7,9 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy import Enum, Numeric, Integer
 
 from app.models.zone import Zone
+import enum
 
-
-class TicketTypeEnum(str, Enum):
+class TicketTypeEnum(enum.Enum):
     REGULAR = "regular"
     VIP = "vip"
 
@@ -26,9 +26,6 @@ class Ticket(db.Model):
     sold = db.Column(Integer, default=0, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-
-    # Relationship
-    zone = db.relationship("Zone", backref=db.backref("tickets", lazy="dynamic"))
 
     # Method để serialize
     def to_dict(self):

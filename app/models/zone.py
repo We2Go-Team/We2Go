@@ -3,21 +3,21 @@
 import uuid
 from datetime import datetime
 from app.config.database import db
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.mysql import CHAR
 from sqlalchemy import Enum
-from app.models.ticket import Ticket
-from app.models.event import Event
+import enum
 
-class ZoneTypeEnum(str, Enum):
-    STANDING = "standing"
-    SEATED = "seated"
-    VIP = "vip"
+
+class ZoneTypeEnum(enum.Enum):
+    STANDING = "STANDING"
+    SEATED = "SEATED"
+    VIP = "VIP"
 
 class Zone(db.Model):
     __tablename__ = "zones"
 
-    id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    event_id = db.Column(UUID(as_uuid=True), db.ForeignKey("events.id"), nullable=False)
+    id = db.Column(CHAR(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    event_id = db.Column(CHAR(36), db.ForeignKey("events.id"), nullable=False)
     name = db.Column(db.String(255), nullable=False)
     type = db.Column(Enum(ZoneTypeEnum), nullable=False)
     description = db.Column(db.Text, nullable=True)

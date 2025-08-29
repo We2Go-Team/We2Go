@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from app.services import EventService
+from flask import Blueprint, render_template, jsonify
+from app.services import EventService, ZoneService
 import os, json, re, unicodedata
 from flask import Blueprint, request, redirect, render_template, flash, url_for
 from datetime import datetime
@@ -9,8 +9,9 @@ import cloudinary.uploader
 from app.utils.decorators import catch_errors, validate_dto_fields
 from app.DTOs.eventCreateDTO import EventCreateDTO
 
-dashboard = Blueprint("dashboard", __name__)
 
+
+dashboard = Blueprint("dashboard", __name__)
 
 def slugify(text):
     text = text.replace("đ", "d").replace("Đ", "d")
@@ -159,7 +160,7 @@ def create_event(dto_class=None):
 def preview_event(alias, dto_class=None):
     # Lấy event từ service theo alias
     event = EventService.get_event_by_alias(alias)
-
+    zones = ZoneService.get_zones_by_event(event.id)
     if request.method == "POST":
         # === Lấy dữ liệu từ form ===
         title = request.form.get("title")
@@ -223,8 +224,6 @@ def preview_event(alias, dto_class=None):
             flash("Sự kiện đã được tạo!", "success")
             event_obj = created_event
             
-
-
         return redirect(url_for('dashboard.preview_event', alias=updated_event.alias))
        
     time_start = event.time_start
@@ -237,7 +236,7 @@ def preview_event(alias, dto_class=None):
     end_date = time_end.strftime("%Y-%m-%d") if time_end else ""
     end_time = time_end.strftime("%H:%M") if time_end else ""
     # === GET request: render form với dữ liệu event ===
-    form_data = (
+    event_data = (
         {
             "title": event.title,
             "alias": event.alias,
@@ -256,15 +255,14 @@ def preview_event(alias, dto_class=None):
         else {}
     )
 
+
+    zones_data = [z.to_dict() for z in zones] if zones else []
     return render_template(
         "pages/dashboard/event_form.html",
         title="Xem / Cập nhật sự kiện",
-        form_data=form_data,
+        event=event_data,
         event_id=event.id if event else None,
+        zones=zones_data
     )
 
 
-# Trang quản lý sự kiện
-# @dashboard.route('/dashboard/events')
-# def events_page():
-#     return render_template('pages/dashboard/events.html', show_header=False)

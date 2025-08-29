@@ -2,8 +2,8 @@ from flask import Flask
 from app.config.database import mysql_config
 from flask_ckeditor import CKEditor
 import cloudinary
-import cloudinary.uploader
-import cloudinary.api
+
+from .routes import register_routes
 
 
 def create_app():
@@ -23,6 +23,8 @@ def create_app():
     mysql_config(app)
     app.secret_key = "your-very-secret-key-123456789"
     # Cấu hình Routes
-    from .routes import register_routes
+
+    
+    
     register_routes(app)
     return app
