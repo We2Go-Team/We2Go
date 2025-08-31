@@ -41,21 +41,21 @@ class EventRepository:
     def get_event_by_id(event_id, include_relationships=False):
         query = Event.query
         if include_relationships:
-            query = query.options(joinedload(Event.categories))
+            query = query.options(joinedload(Event.category))
         return query.get(event_id)
 
     @staticmethod
     def get_event_by_alias(alias, include_relationships=False):
         query = Event.query.filter(func.lower(Event.alias) == alias.lower())
         if include_relationships:
-            query = query.options(joinedload(Event.categories))
+            query = query.options(joinedload(Event.category))
         return query.first()
 
     @staticmethod
     def get_event_by_location(location, include_relationships=False):
         query = Event.query.filter(func.lower(Event.location) == location.lower())
         if include_relationships:
-            query = query.options(joinedload(Event.categories))
+            query = query.options(joinedload(Event.category))
         return query.all()
 
     @staticmethod
@@ -104,18 +104,18 @@ class EventRepository:
 
         # Lọc theo thể loại nếu không phải "all"
         if category and category != "all":
-            query = query.join(Event.categories).filter(Category.name.ilike(f"%{category}%"))
+            query = query.join(Event.category).filter(Category.name.ilike(f"%{category}%"))
 
-        # Luôn load categories nếu cần
+        # Luôn load category nếu cần
         if include_relationships:
-            query = query.options(joinedload(Event.categories))
+            query = query.options(joinedload(Event.category))
 
         return query.order_by(Event.time_start.asc()).all()
 
     @staticmethod
-    def get_event_categories(event_id):
+    def get_event_category(event_id):
         """Trả về danh sách category name của 1 event"""
         event = EventRepository.get_event_by_id(event_id, include_relationships=True)
         if not event:
             return []
-        return [cat.name for cat in event.categories]
+        return [cat.name for cat in event.category]

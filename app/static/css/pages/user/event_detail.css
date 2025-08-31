@@ -117,7 +117,8 @@
 }
 
 .event-desc img {
-    width: 100%;
+    width: 100%!important;
+    object-fit: contain;
 }
 
 .event-desc .description {
