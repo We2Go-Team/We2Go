@@ -51,7 +51,9 @@ def events_page():
             date_str = ""
             
         status_str = getattr(e.status, "value", e.status) or "Draft"
-        min_price = e.min_price if e.min_price is not None else 0
+        min_price = EventService.get_lowest_ticket_price(e.id)
+        print("Min", min_price)
+
         events_dict.append({
             "id": str(e.id),
             "title": e.title or "No title",
@@ -74,6 +76,9 @@ def events_page():
 @events.route('/<alias>', methods=['GET'])
 def events_detail_page(alias):
     event = EventService.get_event_by_alias(slugify(alias)) 
+    min_price = EventService.get_lowest_ticket_price(event.id)
+    event.min_price = min_price
+    print("Min price", min_price)
     return render_template('pages/user/event_detail.html', show_header=True, event=event)
 
 @events.route('/search', methods=['GET', 'POST'])

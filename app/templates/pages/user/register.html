@@ -1,62 +1,58 @@
 {% extends "layouts/layout.html" %}
 
-{% block title %}Đăng nhập{% endblock %}
+{% block title %}Đăng kí{% endblock %}
 
 {% block content %}
 <main>
     <div class="register-page">
         <div class="background-image">
-            <img src="{{ url_for('static', filename='images/register_bg.png') }}" alt="My Image" >
+            <img src="{{ url_for('static', filename='images/register_bg.png') }}" alt="My Image">
         </div>
         <div class="register-form">
             <div class="change-type-regis">
-                <input type="radio" class="btn-check" name="options" id="personal" autocomplete="off" checked
-                    onclick="handleSelect(this)">
+                <input type="radio" class="btn-check" name="options" id="personal" autocomplete="off" checked>
                 <label class="btn btn-primary" for="personal">Cá nhân</label>
 
-                <input type="radio" class="btn-check" name="options" id="organization" autocomplete="off"
-                    onclick="handleSelect(this)">
+                <input type="radio" class="btn-check" name="options" id="organization" autocomplete="off">
                 <label class="btn btn-light" for="organization">Tổ chức</label>
             </div>
 
-            <div class="register-form-container" id="form-personal">
+            <!-- FORM CÁ NHÂN -->
+            <form method="POST" action="{{ url_for('auth.register') }}" id="form-personal" class="register-form-container">
                 <div class="title">
                     <h3>Đăng kí tài khoản cá nhân</h3>
                     <p>Chào mừng đến với We2Go, vui lòng tạo tài khoản của bạn bằng cách điền thông tin bên dưới.</p>
                 </div>
                 <div class="lg-form">
                     <div class="input-group">
-                        <input type="text" placeholder="Họ" />
-                        <input type="text" placeholder="Tên" />
+                        <input type="text" name="first_name" placeholder="Họ" required />
+                        <input type="text" name="last_name" placeholder="Tên" required />
                     </div>
-                    <input type="text" placeholder="Số điện thoại" />
-                    <input type="text" placeholder="Nhập địa chỉ email" />
-                    <input type="password" placeholder="Nhập mật khẩu" />
-                    <input type="password" placeholder="Xác nhận mật khẩu" />
+                    <input type="text" name="phone" placeholder="Số điện thoại" required />
+                    <input type="email" name="email" placeholder="Nhập địa chỉ email" required />
+                    <input type="password" name="password" placeholder="Nhập mật khẩu" required />
+                    <input type="password" name="confirm_password" placeholder="Xác nhận mật khẩu" required />
                 </div>
                 <div class="lg-actions mt-2">
-                    <button class="register-btn-confirm">
-                        Đăng kí
-                    </button>
-                    <!-- <p><span>Hoặc</span></p>
-                    <div class="gg-register-btn">Đăng nhập với google</div> -->
+                    <button type="submit" class="register-btn-confirm">Đăng kí</button>
                 </div>
-            </div>
+            </form>
 
-            <div class="register-form-container" id="form-organization">
+            <!-- FORM TỔ CHỨC -->
+            <form method="POST" action="{{ url_for('auth.register') }}" id="form-organization" class="register-form-container" style="display:none;">
                 <div class="title">
                     <h3>Đăng kí tài khoản nhà tổ chức / doanh nghiệp</h3>
-                    <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go. Chúng tôi đồng hành cùng bạn trên hành trình tổ chức sự kiện chuyên nghiệp, hiệu quả và dễ dàng hơn bao giờ hết.</p>
+                    <p>Hãy tạo tài khoản để bắt đầu đăng bán vé trên nền tảng We2Go.</p>
                 </div>
                 <div class="lg-form">
                     <div class="input-group">
-                        <input type="text" placeholder="Họ" />
-                        <input type="text" placeholder="Tên" />
+                        <input type="text" name="first_name" placeholder="Họ" required />
+                        <input type="text" name="last_name" placeholder="Tên" required />
                     </div>
-                    <input type="text" placeholder="Tên doanh nghiệp / nhà tổ chức" />
+                    <input type="text" name="company" placeholder="Tên doanh nghiệp / nhà tổ chức" required />
                     <div class="input-group">
-                        <input type="text" placeholder="Mã số thuế" />
-                        <select class="form-select" aria-label="Default select example">
+                        <input type="text" name="tax_code" placeholder="Mã số thuế" required />
+                        <select name="field" class="form-select" required>
                             <option value="" disabled selected hidden>Chọn lĩnh vực hoạt động</option>
                             <option value="entertainment">Giải trí / Sự kiện</option>
                             <option value="travel">Du lịch / Lữ hành</option>
@@ -71,63 +67,37 @@
                         </select>
                     </div>
 
-                    <input type="text" placeholder="Số điện thoại" />
-                    <input type="text" placeholder="Nhập địa chỉ email" />
-                    <input type="password" placeholder="Nhập mật khẩu" />
-                    <input type="password" placeholder="Xác nhận mật khẩu" />
+                    <input type="text" name="phone" placeholder="Số điện thoại" required />
+                    <input type="email" name="email" placeholder="Nhập địa chỉ email" required />
+                    <input type="password" name="password" placeholder="Nhập mật khẩu" required />
+                    <input type="password" name="confirm_password" placeholder="Xác nhận mật khẩu" required />
                 </div>
                 <div class="lg-actions mt-2">
-                    <button class="register-btn-confirm">
-                        Đăng kí
-                    </button>
-                    <!-- <p><span>Hoặc</span></p>
-                    <div class="gg-register-btn">Đăng nhập với google</div> -->
+                    <button type="submit" class="register-btn-confirm">Đăng kí</button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </main>
 
 <script>
-    function handleSelect(radio) {
-        const isOrganization = radio.id === 'organization';
-        const label1 = document.querySelector('label[for="personal"]');
-        const label2 = document.querySelector('label[for="organization"]');
-        if (isOrganization) {
-            label1.classList.remove("btn-primary");
-            label1.classList.add("btn-light");
+    const personalRadio = document.getElementById('personal');
+    const orgRadio = document.getElementById('organization');
+    const personalForm = document.getElementById('form-personal');
+    const orgForm = document.getElementById('form-organization');
 
-            label2.classList.remove("btn-light");
-            label2.classList.add("btn-primary");
-        } else {
-            label2.classList.remove("btn-primary");
-            label2.classList.add("btn-light");
-
-            label1.classList.remove("btn-light");
-            label1.classList.add("btn-primary");
-        }
-
-        // ✅ Hiển thị thêm trường dành cho tổ chức (nếu muốn)
-        const orgFields = document.getElementById("org-fields");
-        if (orgFields) {
-            orgFields.style.display = isOrganization ? "block" : "none";
-        }
-    }
-
-    document.getElementById('personal').addEventListener('change', function () {
-
+    personalRadio.addEventListener('change', function () {
         if (this.checked) {
-            document.getElementById('form-personal').style.display = 'block';
-            document.getElementById('form-organization').style.display = 'none';
+            personalForm.style.display = 'block';
+            orgForm.style.display = 'none';
         }
     });
 
-    document.getElementById('organization').addEventListener('change', function () {
+    orgRadio.addEventListener('change', function () {
         if (this.checked) {
-            document.getElementById('form-personal').style.display = 'none';
-            document.getElementById('form-organization').style.display = 'block';
+            personalForm.style.display = 'none';
+            orgForm.style.display = 'block';
         }
     });
 </script>
-
 {% endblock %}

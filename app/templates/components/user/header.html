@@ -14,12 +14,29 @@
         </div>
         <div class="search-bar">
             <div class="search">
-                <input type="text" placeholder="Tìm kiếm sự kiện" id="search-input"/>
+                <input type="text" placeholder="Tìm kiếm sự kiện" id="search-input" />
                 <i class="bi bi-search" onclick="onSearch()"></i>
             </div>
 
-            <button class="register-btn">Đăng kí</button>
-            <button class="login-btn">Đăng nhập</button>
+
+            {% if session.get("user_id") %}
+            <div class="profile">
+                <div class="profile-info">
+                    <img src="{{ session.get('user_avatar') or url_for('static', filename='images/defaul_profile.png') }}"
+                        alt="Avatar" width="40" height="40" class="avatar">
+                    <!-- <span>{{ session.get("user_name") }}</span> -->
+                </div>
+                <div class="profile-dropdown">
+                    <a class="logout-btn">Đăng xuất</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="header-actions">
+                <button class="register-btn"><a href="/register">Đăng kí</a></button>
+                <button class="login-btn"><a href="/login" style="color: white">Đăng nhập</a></button>
+            </div>
+            {% endif %}
+
         </div>
     </nav>
 </header>

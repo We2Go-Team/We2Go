@@ -73,8 +73,7 @@ def validate_dto_fields(dto_class, template, context_extra=None):
                         "missing_fields": missing_fields
                     }
                             
-                    flash(" Tạo thất bại", "danger")
-                    flash(" vui lòng kiểm tra và điền đầy đủ thông tin cung cấp", "danger")
+                    flash(" vui lòng kiểm tra và cung cấp đầy đủ thông tin yêu cầu", "danger")
                     
                     if context_extra:
                         context.update(context_extra)

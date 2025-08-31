@@ -5,6 +5,11 @@ from app.repositories.event_repository import EventRepository
 
 
 class EventService:
+
+    @staticmethod
+    def get_lowest_ticket_price(event_id):
+        lowest = EventRepository.get_lowest_ticket_price(event_id)
+        return lowest if lowest else 0
     
     @staticmethod
     def create_event(data: dict):

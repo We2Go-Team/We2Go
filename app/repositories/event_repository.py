@@ -1,4 +1,7 @@
-from app.models.event import Event
+from app.models import Event
+from app.models import Zone
+from app.models import Ticket
+
 from app.models.category import Category
 from app.config.database import db
 from sqlalchemy import func, or_
@@ -6,6 +9,20 @@ from sqlalchemy.orm import joinedload
 
 
 class EventRepository:
+
+    @staticmethod
+    def get_lowest_ticket_price(event_id):
+        """Trả về giá vé thấp nhất trong tất cả zone của một sự kiện"""
+        lowest_price = (
+            db.session.query(func.min(Ticket.price))
+            .join(Zone, Zone.id == Ticket.zone_id)
+            .filter(Zone.event_id == event_id)
+            .scalar()
+        )
+
+        print("repository: ", lowest_price)
+        return lowest_price if lowest_price is not None else 0
+
     @staticmethod
     def create_event(event: Event):
         db.session.add(event)

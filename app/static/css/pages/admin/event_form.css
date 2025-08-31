@@ -35,18 +35,29 @@
     transform: scale(0.8);
 }
 
-
-.event_form-actions button svg {}
+.event_form-actions button svg {
+}
 
 .event_form-actions button:hover {
     opacity: 1 !important;
     transform: scale(0.9);
-
 }
 
 .event_form-actions button.create {
     width: 150px;
     background-color: rgb(12, 110, 12);
+    color: white;
+    opacity: 0.8;
+    border-radius: 25px 25px 25px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+
+.event_form-actions button.update {
+    width: 150px;
+    background-color: rgb(1, 77, 255);
     color: white;
     opacity: 0.8;
     border-radius: 25px 25px 25px 25px;
@@ -62,10 +73,8 @@
     opacity: 0.8;
 }
 
-
-
 .event_form .event_form-main {
-    flex-basis: 60%;
+    flex-basis: 55%;
     height: 100%;
     background-color: white;
     padding: 2%;
@@ -80,7 +89,6 @@
     text-transform: uppercase;
     justify-content: flex-end;
     color: white;
-
 }
 
 .event_form .event_form-main .is-created .status {
@@ -92,13 +100,12 @@
 .event_form .title {
     margin: 0;
     margin-bottom: 30px;
-
 }
 
 .event_form .title h3 {
     margin-bottom: 6px;
     text-transform: uppercase;
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 
 .event_form .title p {
@@ -136,7 +143,6 @@
 .event_form .input-field .label button.create {
     background-color: rgb(12, 110, 12);
     color: white;
-    opacity: 0.8;
     outline: none;
     cursor: pointer;
 }
@@ -144,7 +150,6 @@
 .event_form .input-field .label button.delete {
     background-color: rgb(219, 89, 3);
     color: white;
-    opacity: 0.8;
     outline: none;
     cursor: pointer;
 }
@@ -176,7 +181,6 @@
 .event_form .input-field input#img {
     border: none;
     padding: 0px;
-
 }
 
 .event_form .input-field .image-container {
@@ -250,7 +254,6 @@
     top: 20px;
     overflow-x: hidden;
     max-width: 40%;
-
 }
 
 .event_form .event_form-container .event_form-ticket .zone-setup {
@@ -260,6 +263,7 @@
     gap: 10px;
     margin-bottom: 20px;
     padding-bottom: 20px;
+    position: relative;
 }
 
 .event_form .event_form-container .event_form-ticket .zone-setup .zone-container {
@@ -286,7 +290,26 @@
     transition: 0.22s background-color ease-in-out;
     text-align: center;
     padding: 2%;
-}  
+    position: relative;
+    user-select: none;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item .badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: white;
+    padding: 4px 6px;
+    font-size: 0.7em;
+    border-radius: 4px;
+    text-transform: capitalize !important;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item .badge.new {
+    background-color: green;
+    text-transform: uppercase;
+    font-size: 0.6em;
+}
 
 .event_form .event_form-container .event_form-ticket .zone-setup .zone-item.active {
     background-color: #1e3557;
@@ -310,41 +333,78 @@
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center ;
+    justify-content: center;
     border-radius: 50%;
 }
 
-.event_form .event_form-container .event_form-ticket .zone-setup .zone-item .remove svg{
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-item .remove svg {
     width: 20px;
     height: 20px;
 }
 
-.event_form .event_form-container .event_form-ticket .zone-setup .zone-card {
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit {
+    display: none;
+    position: relative;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit.active {
     min-height: 55px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: 4% 2%;
+    padding: 4% 3%;
     border-radius: 6px;
     background-color: white;
     border: 1px solid #ddd;
 }
 
-.event_form .event_form-container .event_form-ticket .zone-setup .zone-card .name {
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit .name {
     font-weight: 600;
 }
 
-.event_form .event_form-container .event_form-ticket .zone-setup .ticket-type {
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit .ticket-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit .ticket-list .ticket-item {
+    background-color: #7d7e8069;
+    padding: 20px 40px;
+    border-radius: 4px;
+    width: fit-content;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit .ticket-list .ticket-item.active {
+    background-color: #1e3557e3;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .zone-card-edit .ticket-list .ticket-item:hover {
+    background-color: #1e3557e3;
+}
+
+.event_form .event_form-container .event_form-ticket .zone-setup .ticket-edit {
     min-height: 55px;
     display: flex;
     flex-direction: column;
-    padding: 4% 2%;
+    padding: 4%;
+    padding-bottom: 10%;
     border-radius: 6px;
-    background-color: white;
+    background-color: #1e3557;
     border: 1px solid #ddd;
     gap: 10px;
+    color: white;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+.event_form .event_form-container .event_form-ticket .zone-setup .ticket-edit.active {
+}
 
 .event_form .event_form-container .event_form-ticket .terms-and-conditions {
     padding: 0px 4%;
@@ -368,7 +428,6 @@
 }
 
 .event_form .event_form-container .event_form-ticket .terms-and-conditions ul li p {
-
     letter-spacing: 0.8px;
     font-size: 0.9em;
     padding: 4px 0px;

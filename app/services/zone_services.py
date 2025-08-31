@@ -5,6 +5,7 @@ from app.repositories.zone_repository import ZoneRepository
 import string
 
 class ZoneService:
+
     @staticmethod
     def create_default_zone_for_event(event_id):
         """Tạo một zone mặc định với tên theo alphabet (Zone A, Zone B, ...)"""
@@ -38,6 +39,71 @@ class ZoneService:
 
         # Nếu vượt quá Z thì có thể đặt theo số
         raise Exception("Đã hết alphabet cho Zone!")
+
+
+    @staticmethod
+    def synchronize_zones_for_event(event_id, zones_data):
+        from app.services import TicketService
+        synchronize_zones = []
+        
+        for zone in zones_data:
+            zone_id = zone.get("id")
+            metadata = zone.get("metadata", {})
+            
+            # ZONE DELETE DEPENDING ON metadata
+            if metadata.get("isDeleted"):
+                if zone_id:
+                    ZoneRepository.delete_zone(zone_id)
+                
+                continue
+
+            # ZONE CREATE DEPENDING ON metadata
+            if metadata.get("isCreated"):
+                new_zone = Zone(
+                    event_id=event_id,
+                    name=zone.get("name"),
+                    type=zone.get("type", "STAND"),
+                    capacity=zone.get("capacity", 0),
+                    description=zone.get("description", ""),
+                )
+                created_zone = ZoneRepository.create_zone(new_zone)
+                synchronize_zones.append({
+                    "id": str(created_zone.id),
+                    "event_id": str(created_zone.event_id),
+                    "name": created_zone.name,
+                    "type": created_zone.type,
+                    "capacity": created_zone.capacity,
+                    "description": created_zone.description
+                })
+                continue
+
+            # ZONE UPDATE DEPENDING ON metadata
+            if zone_id and metadata.get("isUpdated"):
+                update_data = {
+                    "name": zone.get("name"),
+                    "type": zone.get("type", "STAND"),
+                    "capacity": zone.get("capacity", 0),
+                    "description": zone.get("description", ""),
+                }
+                updated_zone = ZoneRepository.update_zone(zone_id, **update_data)
+                if updated_zone:
+                    synchronize_zones.append({
+                        "id": str(updated_zone.id),
+                        "event_id": str(updated_zone.event_id),
+                        "name": updated_zone.name,
+                        "type": updated_zone.type,
+                        "capacity": updated_zone.capacity,
+                        "description": updated_zone.description
+                    })
+
+            tickets_data = zone.get("tickets", None)
+   
+            if tickets_data:
+                TicketService.synchronize_tickets_for_zone(zone_id, tickets_data)
+
+            
+           
+        return synchronize_zones
 
     @staticmethod
     def create_zone(zone: Zone):

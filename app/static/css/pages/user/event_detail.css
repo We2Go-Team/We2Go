@@ -11,7 +11,7 @@
 }
 
 .event-image {
-    flex-basis: 75%;
+    flex-basis: 45%;
     flex-shrink: 1;
     height: 100%;
     position: sticky;
@@ -81,6 +81,7 @@
     flex-direction: column;
     padding-right: 50px;
     transform-style: preserve-3d;
+    flex-grow: 1;
 }
 
 .event-header {
@@ -113,7 +114,10 @@
 .event-desc {
     margin-top: 20px;
     max-width: 50vw !important;
-    text-align: justify;
+}
+
+.event-desc img {
+    width: 100%;
 }
 
 .event-desc .description {

@@ -80,8 +80,8 @@
 
                     <div class="input-group">
                         <div class="input-field">
-                            <p>Địa điểm tổ chức (Tòa nhà, sân vận động ...)</p>
-                            <input type="text" name="venue" placeholder="Địa điểm tổ chức sự kiện"
+                            <p>Địa điểm tổ chức </p>
+                            <input type="text" name="venue" placeholder=" Nhà, sân vận động ... "
                                 value="{{ event.venue if event else '' }}"
                                 class="{% if 'venue' in missing_fields %}is-invalid{% endif %}" />
                         </div>
@@ -122,18 +122,14 @@
 
                         <div class="zone-setup">
                             <div class="zone-container">
-
-
+                                <!-- Zones render here -->
                             </div>
                             <input type="hidden" name="zones" id="zones-data" />
-
-
-                            <div class="zone-card" id="zone-card">
+                            <div class="zone-card-edit" id="zone-card-edit">
                                 <div class="label">
                                     <p>Thông tin khu vực</p>
                                     <div class="label-actions">
                                         <button type="button" class="delete" onclick="deleteZone()">Xóa</button>
-                                        <button type="button" class="create">Lưu</button>
                                     </div>
                                 </div>
 
@@ -147,8 +143,8 @@
                                     <div class="input-field flex-66">
                                         <p>Thể loại</p>
                                         <select id="zone-type" onchange="updateCurrentZone()">
-                                            <option value="floor">Ghế ngồi</option>
-                                            <option value="balcony">Tự do</option>
+                                            <option value="SEAT">Ghế ngồi</option>
+                                            <option value="STAND">Tự do</option>
                                         </select>
                                     </div>
                                     <div class="input-field" onchange="updateCurrentZone()">
@@ -163,34 +159,35 @@
                                         placeholder="Mô tả khu vực: vị trí, hướng dẫn..." />
                                 </div>
 
+
                                 <div class="input-field">
                                     <p>Cấu hình vé </p>
-                                    <button type="button" id="add-ticket" class="create">Thêm loại vé</button>
-                                    <ul id="ticket-list"></ul>
-                                </div>
-                            </div>
-
-                            <div class="ticket-type">
-                                <div class="label">
-                                    <p>Thông tin loại vé</p>
-                                    <div class="label-actions">
-                                        <button type="button" class="delete">Xóa</button>
-                                        <button type="button" class="create">Tạo vé</button>
+                                    <div class="ticket-list">
+                                        <!-- Tickets render here -->
                                     </div>
+                                </div>
 
-                                </div>
-                                <div class="input-field">
-                                    <p>Tên, loại vé</p>
-                                    <input type="text" name="title" id="title" placeholder="Vé vip, vé thường ..." />
-                                </div>
-                                <div class="input-group">
-                                    <div class="input-field flex-66 ">
-                                        <p>Giá vé</p>
-                                        <input type="number" name="venue" placeholder="Giá vé" min="0" />
+                                <div class="ticket-edit" id="ticket-edit">
+                                    <div class="label">
+                                        <p>Thông tin loại vé</p>
+                                        <div class="label-actions">
+                                            <button type="button" class="delete" onclick="deleteTicket()">Xóa</button>
+                                            <button type="button" class="create" onclick="addTicket()">Thêm vé</button>
+                                        </div>
                                     </div>
                                     <div class="input-field">
-                                        <p>Số lượng</p>
-                                        <input type="number" name="location" placeholder="số lượng" min="0" />
+                                        <p>Tên, loại vé</p>
+                                        <input type="text" name="name" id="title" placeholder="Vé vip, vé thường ..." />
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-field flex-66 ">
+                                            <p>Giá vé</p>
+                                            <input type="number" name="price" placeholder="Giá vé" min="0" />
+                                        </div>
+                                        <div class="input-field">
+                                            <p>Số lượng</p>
+                                            <input type="number" name="quantity" placeholder="số lượng" min="0" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -209,18 +206,30 @@
     const title = document.getElementById("title");
     const alias = document.getElementById("alias");
     const defaultImg = document.getElementById("default-img");
+
     var event_id = '{{ event_id }}';
     var event = '{{ event }}';
+
+    var metadata = {
+        isCreated: false,
+        isDeleted: false,
+        isUpdated: false
+    }
 
     // Zone Actions
     const zoneContainer = document.querySelector(".zone-container");
     const addZoneBtn = document.getElementById("add-zone");
     const zonesInput = document.getElementById("zones-data");
+    const zonesEditCard = document.getElementById("zone-card-edit");
+    const ticketEditCard = document.getElementById("ticket-edit");
     let currentCharCode = "A".charCodeAt(0);
     let zoneCount = 0;
     let zones = '{{ zones|default([])|tojson }}' && event_id ? JSON.parse('{{ zones|default([])|tojson }}') : [];
-    let currentZoneIndex = null; // zone đang chọn
+    var currentZoneIndex = null;
+    var currentTicketIndex = null;
 
+
+    // Zone Methods
     function syncZoneNaming(zones) {
         if (!zones || zones.length === 0) return;
 
@@ -239,6 +248,12 @@
     }
 
     function getNextZoneName() {
+        if (zones.length === 0) {
+            currentCharCode = "A".charCodeAt(0);
+            zoneCount = 0;
+            return "Zone A";
+        }
+
         if (currentCharCode < "Z".charCodeAt(0)) {
             currentCharCode++;
             return "Zone " + String.fromCharCode(currentCharCode);
@@ -258,49 +273,51 @@
             type: "STAND",
             capacity: 100,
             description: "",
+            metadata: { ...metadata, isCreated: true }
         });
 
         // render ra giao diện
-        const zoneItem = document.createElement("div");
-        zoneItem.className = "zone-item";
-        zoneItem.textContent = zoneName;
-        zoneContainer.appendChild(zoneItem);
-
-        // update hidden input
-        zonesInput.value = JSON.stringify(zones);
-
         zoneRender();
     }
 
     function selectZone(zoneIndex) {
-        console.log("Selecting zone at index:", zoneIndex, zones[zoneIndex]);
-        const zone = zones[zoneIndex];
-        if (!zone) {
-            console.error("Zone not found with id:", zones[zoneIndex]);
-            return;
+        if (currentZoneIndex === zoneIndex) {
+            zoneIndex = null;
+            currentZoneIndex = null
+            const zoneNameInput = document.getElementById("zone-name");
+            const zoneTypeSelect = document.getElementById("zone-type");
+            const zoneCapacityInput = document.getElementById("zone-capacity");
+            const zoneDescriptionInput = document.getElementById("zone-description");
+            // const zoneTicketList = document.getElementById("ticket-list");
+
+            zonesEditCard.classList.remove("active");
+            zoneNameInput.value = "";
+            zoneTypeSelect.value = "balcony";
+            zoneCapacityInput.value = 0;
+            zoneDescriptionInput.value = "";
+        } else {
+            const zone = zones[zoneIndex];
+            const zoneNameInput = document.getElementById("zone-name");
+            const zoneTypeSelect = document.getElementById("zone-type");
+            const zoneCapacityInput = document.getElementById("zone-capacity");
+            const zoneDescriptionInput = document.getElementById("zone-description");
+
+            // const zoneTicketList = document.getElementById("ticket-list");
+
+            zonesEditCard.classList.add("active");
+            zoneNameInput.value = zone.name || "";
+            zoneTypeSelect.value = zone.type || "balcony";
+            zoneCapacityInput.value = zone.capacity || 100;
+            zoneDescriptionInput.value = zone.description || "";
+            currentZoneIndex = zoneIndex;
         }
 
-        currentZoneIndex = zoneIndex;
-
-        const zoneNameInput = document.getElementById("zone-name");
-        const zoneTypeSelect = document.getElementById("zone-type");
-        const zoneCapacityInput = document.getElementById("zone-capacity");
-        const zoneDescriptionInput = document.getElementById("zone-description");
-        // const zoneTicketList = document.getElementById("ticket-list");
-
-        zoneNameInput.value = zone.name || "";
-        zoneTypeSelect.value = zone.type || "balcony";
-        zoneCapacityInput.value = zone.capacity || 100;
-        zoneDescriptionInput.value = zone.description || "";
 
         zoneRender();
         syncZoneNaming(zones);
+        ticketsRender();
         // Nếu cần load vé của zone
         // renderTickets(zone.tickets || []);
-
-        zoneRender();
-        syncZoneNaming(zones);
-
     }
 
     function zoneRender() {
@@ -308,16 +325,32 @@
         zones.map((zone, index) => {
             const zoneElem = document.createElement("div");
             zoneElem.className = "zone-item " + (currentZoneIndex === index ? "active" : "");
-
-            // Gắn event listener đúng zone
             zoneElem.addEventListener("click", () => selectZone(index));
-
             zoneElem.textContent = zone.name;
+
+            if (!zone.metadata) {
+                zone.metadata = { ...metadata };
+            }
+
+            if (zone.metadata && zone.metadata.isCreated) {
+                const newBadge = document.createElement("span");
+                newBadge.className = "badge new";
+                newBadge.textContent = "NEW";
+                zoneElem.appendChild(newBadge);
+            }
+
+            if (zone.metadata && zone.metadata.isDeleted) return
+
             zoneContainer.appendChild(zoneElem);
         });
+
+        console.log("check zones", zones)
+        // update hidden input
+        zonesInput.value = JSON.stringify(zones)
     }
 
     function deleteZone() {
+
         // Kiểm tra mảng zones có rỗng không
         if (zones.length === 0 || currentZoneIndex < 0 || currentZoneIndex >= zones.length) {
             console.error("No zone selected or zones empty");
@@ -330,33 +363,39 @@
             return; // Hủy xóa nếu người dùng nhấn Cancel
         }
 
-        // Xóa zone hiện tại theo index
-        zones.splice(currentZoneIndex, 1);
+        if (zones[currentZoneIndex].isNew) {
+            // Xóa zone hiện tại theo index
+            zones.splice(currentZoneIndex, 1);
+        } else {
+            zones[currentZoneIndex].metadata = { ...metadata, isDeleted: true };
+        }
 
-        // Điều chỉnh currentZoneIndex sau khi xóa
         if (currentZoneIndex >= zones.length) {
-            currentZoneIndex = zones.length - 1; // chọn zone cuối cùng còn lại
+            currentZoneIndex = zones.length - 1;
         }
 
         // Cập nhật UI
         if (currentZoneIndex >= 0) {
             selectZone(currentZoneIndex);
         }
+
+
         zoneRender();
         syncZoneNaming(zones);
+
+        console.log("Zones after deletion:", zones);
     }
 
     function updateCurrentZone() {
+        console.log("Updating zone:", zones[currentZoneIndex]);
         // Kiểm tra có zone nào đang được chọn không
         if (currentZoneIndex < 0 || currentZoneIndex >= zones.length) {
             console.error("No zone selected");
             return;
         }
 
-
-
         const zone = zones[currentZoneIndex];
-
+        
         // Lấy giá trị từ form
         const zoneNameInput = document.getElementById("zone-name");
         const zoneTypeSelect = document.getElementById("zone-type");
@@ -368,13 +407,14 @@
         zone.type = zoneTypeSelect.value || zone.type;
         zone.capacity = parseInt(zoneCapacityInput.value) || zone.capacity;
         zone.description = zoneDescriptionInput.value || zone.description;
-
+        zone.metadata = { ...zone.metadata, isUpdated: true }
+        
         // Cập nhật UI nếu cần (tên zone trong danh sách)
         const zoneElement = document.querySelector(`.zone-item.active`);
         if (zoneElement) {
             zoneElement.textContent = zone.name;
         }
-        console.log("Updating zone:", zone);
+
         // Đồng bộ với input hidden hoặc lưu dữ liệu
         zonesInput.value = JSON.stringify(zones);
 
@@ -385,6 +425,158 @@
 
     zoneRender();
 
+    // Ticket Methods
+    function addTicket() {
+
+
+        // Lấy thông tin từ form vé
+        const ticketName = document.querySelector("[name='name']").value || "Vé mới";
+        const ticketPrice = document.querySelector("[name='price']").value || 0;
+        const ticketQuantity = document.querySelector("[name='quantity']").value || 0;
+
+        // Tạo đối tượng vé
+        const ticket = {
+            name: ticketName,
+            price: parseFloat(ticketPrice),
+            quantity: parseInt(ticketQuantity),
+            metadata: { ...metadata, isCreated: true }
+        };
+
+        // Thêm vé vào zone hiện tại
+        zones[currentZoneIndex].tickets = zones[currentZoneIndex].tickets || [];
+        zones[currentZoneIndex].tickets.push(ticket);
+
+        // Cập nhật UI
+        ticketsRender();
+        clearTicketEditFrom();
+    }
+
+    function selectTicket(ticketIndex) {
+        if (currentTicketIndex === ticketIndex) {
+            currentTicketIndex = null
+            const zone = zones[currentZoneIndex];
+            const ticket = zone.tickets[ticketIndex];
+            const ticketNameInput = document.querySelector("[name='name']");
+            const ticketPriceInput = document.querySelector("[name='price']");
+            const ticketQuantityInput = document.querySelector("[name='quantity']");
+
+            ticketNameInput.value = "";
+            ticketPriceInput.value = 0;
+            ticketQuantityInput.value = 0;
+
+            const addTicketBtn = document.querySelector(".ticket-edit .create");
+            addTicketBtn.textContent = "Thêm vé";
+            addTicketBtn.onclick = () => addTicket;
+        } else {
+            const zone = zones[currentZoneIndex];
+            const ticket = zone.tickets[ticketIndex];
+            // Điền thông tin của vé vào các trường chỉnh sửa
+            const ticketNameInput = document.querySelector("[name='name']");
+            const ticketPriceInput = document.querySelector("[name='price']");
+            const ticketQuantityInput = document.querySelector("[name='quantity']");
+
+            ticketNameInput.value = ticket.name;
+            ticketPriceInput.value = ticket.price;
+            ticketQuantityInput.value = ticket.quantity;
+            currentTicketIndex = ticketIndex
+
+            // Cập nhật giao diện (có thể thay đổi nút "Thêm vé" thành "Cập nhật vé")
+            const addTicketBtn = document.querySelector(".ticket-edit .create");
+            addTicketBtn.textContent = "Cập nhật vé";
+            addTicketBtn.onclick = updateTicket;
+        }
+
+        ticketsRender()
+    }
+
+    function updateTicket() {
+        if (currentZoneIndex === null || currentZoneIndex < 0 || currentZoneIndex >= zones.length) {
+            alert("No zone selected");
+            return;
+        }
+        const zone = zones[currentZoneIndex];
+
+        // Lấy thông tin chỉnh sửa từ form
+        const ticketName = document.querySelector("[name='name']").value || "Vé mới";
+        const ticketPrice = document.querySelector("[name='price']").value || 0;
+        const ticketQuantity = document.querySelector("[name='quantity']").value || 0;
+
+        // Cập nhật thông tin vé
+        const ticket = zone.tickets[currentTicketIndex];
+        ticket.name = ticketName;
+        ticket.price = parseFloat(ticketPrice);
+        ticket.quantity = parseInt(ticketQuantity);
+        ticket.metadata = { ...ticket.metadata, isUpdated: true }
+        currentTicketIndex = null
+        // Cập nhật giao diện
+        ticketsRender();
+        clearTicketEditFrom()
+
+        // Cập nhật nút "Thêm vé" về trạng thái mặc định
+        const addTicketBtn = document.querySelector(".ticket-edit .create");
+        addTicketBtn.textContent = "Thêm vé";
+        addTicketBtn.onclick = addTicket;
+    }
+
+    function clearTicketEditFrom() {
+        const ticketNameInput = document.querySelector("[name='name']");
+        const ticketPriceInput = document.querySelector("[name='price']");
+        const ticketQuantityInput = document.querySelector("[name='quantity']");
+        ticketNameInput.value = "";
+        ticketPriceInput.value = 0;
+        ticketQuantityInput.value = 0;
+    }
+
+    function ticketsRender() {
+        // Xóa vé cũ
+        const ticketList = document.querySelector(".ticket-list");
+        ticketList.innerHTML = "";
+
+        // Render vé mới
+        zones[currentZoneIndex].tickets.forEach((ticket, index) => {
+            const ticketItem = document.createElement("div");
+            const headTicket = document.createElement("div");
+            const contentTicket = document.createElement("div");
+
+            if (!ticket.metadata) ticket.metadata = { ...metadata }
+            if (ticket.metadata && ticket.metadata.isDeleted) return
+
+            ticketItem.className = "ticket-item " + (currentTicketIndex === index ? "active" : "");
+            ticketItem.textContent = `${ticket.name}`;
+            ticketItem.addEventListener("click", () => selectTicket(index));
+            ticketList.appendChild(ticketItem);
+        });
+
+        zonesInput.value = JSON.stringify(zones)
+    }
+
+    function deleteTicket() {
+        if (currentZoneIndex === null || currentZoneIndex < 0 || currentZoneIndex >= zones.length) {
+            alert("No zone selected");
+            return;
+        }
+
+        const zone = zones[currentZoneIndex];
+        if (!zone.tickets || currentTicketIndex < 0 || currentTicketIndex >= zone.tickets.length) {
+            alert("No ticket selected");
+            return;
+        }
+
+        if (!confirm("Bạn có chắc muốn xóa vé này không?")) {
+            return;
+        }
+
+        if (zone.tickets[currentTicketIndex].metadata.isCreated) {
+            zone.tickets.splice(currentTicketIndex, 1);
+        } else {
+            zone.tickets[currentTicketIndex].metadata = { ...metadata, isDeleted: true };
+        }
+
+        currentTicketIndex = null;
+
+        ticketsRender();
+        clearTicketEditFrom();
+    }
 
 
     // Hàm tạo slug

@@ -4,12 +4,26 @@
     }
 
     .event_detail_header {
-        height: 50px;
+        height: 80px;
         background-color: white;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-        margin-bottom: 20px;
-        border-radius: 8px;
+        border-radius: 10px;
+        border-bottom: 1px dashed #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0px 3%;
     }
+
+
+    .event_detail_header button {
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+  
+    }
+
 
     .event_detail-main {
         display: flex;

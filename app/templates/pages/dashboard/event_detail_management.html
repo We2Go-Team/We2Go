@@ -6,7 +6,9 @@
 
 <div class="event_detail_management">
     <div class="event_detail_header">
-        
+        <button type="button" class="edit" onclick="redirectToPreview('{{ event.alias }}')">
+            Chỉnh sửa
+        </button>
     </div>
     <div class="event_detail-main">
         <div class="info-container">
@@ -47,6 +49,10 @@
     </div>
 </div>
 
-
+<script>
+    function redirectToPreview(alias) {
+        window.location.href = `/dashboard/event/preview/${alias}`;
+    }
+</script>
 
 {% endblock %}

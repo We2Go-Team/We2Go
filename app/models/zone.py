@@ -9,9 +9,8 @@ import enum
 
 
 class ZoneTypeEnum(enum.Enum):
-    STANDING = "STANDING"
-    SEATED = "SEATED"
-    VIP = "VIP"
+    STAND = "STAND"
+    SEAT = "SEAT"
 
 class Zone(db.Model):
     __tablename__ = "zones"
@@ -30,8 +29,8 @@ class Zone(db.Model):
     tickets = db.relationship("Ticket", backref="zone", lazy="dynamic", cascade="all, delete-orphan")
 
     # Method để serialize
-    def to_dict(self):
-        return {
+    def to_dict(self, include_relationship=False):
+        data = {
             "id": str(self.id),
             "name": self.name,
             "type": self.type.value if hasattr(self.type, "value") else str(self.type),
@@ -40,3 +39,8 @@ class Zone(db.Model):
             "event_id": str(self.event_id),
             "tickets_count": self.tickets.count()
         }
+
+        if include_relationship:
+            data["tickets"] = [ticket.to_dict() for ticket in self.tickets.all()]
+
+        return data

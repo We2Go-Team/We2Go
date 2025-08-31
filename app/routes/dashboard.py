@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify
-from app.services import EventService, ZoneService
+from app.services import EventService, ZoneService, TicketService
 import os, json, re, unicodedata
 from flask import Blueprint, request, redirect, render_template, flash, url_for
 from datetime import datetime
@@ -70,7 +70,6 @@ def events_page():
         events=data,
     )
 
-
 @dashboard.route("/dashboard/events/<alias>", methods=["GET"])
 def event_detail_page(alias):
     event = EventService.get_event_by_alias(alias)
@@ -80,6 +79,7 @@ def event_detail_page(alias):
     )
 
 
+# Tạo sự kiện mới
 @dashboard.route("/dashboard/event/new", methods=["GET", "POST"])
 @validate_dto_fields(EventCreateDTO, template="pages/dashboard/event_form.html")
 def create_event(dto_class=None):
@@ -155,6 +155,7 @@ def create_event(dto_class=None):
     )
 
 
+# Xem và chỉnh sửa sự kiện
 @dashboard.route("/dashboard/event/preview/<alias>", methods=["GET", "POST"])
 @validate_dto_fields(EventCreateDTO, template="pages/dashboard/event_form.html")
 def preview_event(alias, dto_class=None):
@@ -174,6 +175,12 @@ def preview_event(alias, dto_class=None):
         description = request.form.get("ckeditor")  # HTML
         images = request.form.get("images")  # HTML
 
+        zones_form = request.form.get("zones")
+        zones_data = json.loads(zones_form) if zones_form else []
+
+
+        created_zones = ZoneService.synchronize_zones_for_event(event_id=event.id, zones_data=zones_data)
+        
         # === Handle image upload ===
         image_url = images if images else event.images if event else None
         if "images" in request.files:
@@ -256,7 +263,7 @@ def preview_event(alias, dto_class=None):
     )
 
 
-    zones_data = [z.to_dict() for z in zones] if zones else []
+    zones_data = [z.to_dict(include_relationship = True) for z in zones] if zones else []
     return render_template(
         "pages/dashboard/event_form.html",
         title="Xem / Cập nhật sự kiện",
