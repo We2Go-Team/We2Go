@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify
-from app.services import EventService, ZoneService, TicketService
+from app.services import EventService, ZoneService, CategoryService
 import os, json, re, unicodedata
 from flask import Blueprint, request, redirect, render_template, flash, url_for
 from datetime import datetime
@@ -50,9 +50,7 @@ def events_page():
             "alias": e.alias,
             "event": {
                 "name": e.title,
-                "type": (
-                    ", ".join([c.name for c in e.categories]) if e.categories else None
-                ),
+                "type": e.category.name if e.category else None,
             },
             "date": (
                 e.time_start.strftime("%Y-%m-%d %H:%M:%S") if e.time_start else None
@@ -81,10 +79,12 @@ def event_detail_page(alias):
 
 # Tạo sự kiện mới
 @dashboard.route("/dashboard/event/new", methods=["GET", "POST"])
-@validate_dto_fields(EventCreateDTO, template="pages/dashboard/event_form.html")
+@validate_dto_fields(EventCreateDTO, template="dashboard.create_event")
 def create_event(dto_class=None):
     global next_id
-
+    categories_list = CategoryService.get_all_categories()  # List[Category]
+    categories_data = [c.to_dict() for c in categories_list] if categories_list else []
+  
     if request.method == "POST":
 
         # === Get form data ===
@@ -96,10 +96,10 @@ def create_event(dto_class=None):
         end_time = request.form.get("end_time")
         venue = request.form.get("venue")
         location = request.form.get("location")
-        description = request.form.get("ckeditor")  # HTML
-        images = request.form.get("images")  # HTML
-        
-        
+        description = request.form.get("ckeditor")  
+        images = request.form.get("images")  
+        category_id = request.form.get("category")
+        print("category_id", category_id)
         # === Handle image upload ===
         image_url = None
         if images != "":
@@ -129,7 +129,7 @@ def create_event(dto_class=None):
             "title": title,
             "alias": alias,
             "description": description,
-            "organizer_id": None,  # TODO: lấy từ session login
+            "organizer_id": None,
             "start_date": start_date,
             "end_date": end_date,
             "start_time": start_time,
@@ -141,17 +141,17 @@ def create_event(dto_class=None):
             "images": image_url,
             "min_price": float(request.form.get("min_price") or 0),
             "status": "UPCOMING",
+            "category_id": category_id
         }
         
         # === Create event ===
         created_event = EventService.create_event(data)
         flash("Sự kiện đã được tạo!", "success")
-
         return  redirect(url_for('dashboard.preview_event', alias=created_event.alias))
 
     # === GET request ===
     return render_template(
-        "pages/dashboard/event_form.html", title="Tạo sự kiện mới", event=None
+        "pages/dashboard/event_form.html", title="Tạo sự kiện mới", event=None, categories = categories_data
     )
 
 
@@ -162,6 +162,10 @@ def preview_event(alias, dto_class=None):
     # Lấy event từ service theo alias
     event = EventService.get_event_by_alias(alias)
     zones = ZoneService.get_zones_by_event(event.id)
+    categories_list = CategoryService.get_all_categories()  # List[Category]
+    categories_data = [c.to_dict() for c in categories_list] if categories_list else []
+
+
     if request.method == "POST":
         # === Lấy dữ liệu từ form ===
         title = request.form.get("title")
@@ -174,10 +178,9 @@ def preview_event(alias, dto_class=None):
         location = request.form.get("location")
         description = request.form.get("ckeditor")  # HTML
         images = request.form.get("images")  # HTML
-
         zones_form = request.form.get("zones")
         zones_data = json.loads(zones_form) if zones_form else []
-
+        category_id = request.form.get("category_id")
 
         created_zones = ZoneService.synchronize_zones_for_event(event_id=event.id, zones_data=zones_data)
         
@@ -219,6 +222,7 @@ def preview_event(alias, dto_class=None):
             "images": image_url,
             "min_price": float(request.form.get("min_price") or 0),
             "status": "UPCOMING",
+            "category_id": category_id
         }
 
         # === Create hoặc update event ===
@@ -257,6 +261,7 @@ def preview_event(alias, dto_class=None):
             "images": event.images,
             "min_price": event.min_price,
             "status": event.status,
+            "category_id": event.category_id
         }
         if event
         else {}
@@ -269,7 +274,8 @@ def preview_event(alias, dto_class=None):
         title="Xem / Cập nhật sự kiện",
         event=event_data,
         event_id=event.id if event else None,
-        zones=zones_data
+        zones=zones_data,
+        categories = categories_data
     )
 
 

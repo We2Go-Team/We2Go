@@ -24,6 +24,7 @@ class EventService:
             venue=data.get("venue"),
             images=data.get("images"),
             min_price=data.get("min_price", 0),
+            category_id=data.get("category_id"),
             status=data.get("status")  
         )
         return EventRepository.create_event(event)

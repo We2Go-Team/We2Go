@@ -13,7 +13,12 @@ class Category(db.Model):
     description = db.Column(db.Text, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    events = db.relationship("Event", back_populates="category") 
 
-    events = db.relationship(
-        "Event", secondary=event_categories, back_populates="categories"
-    )
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "description": self.description
+        }

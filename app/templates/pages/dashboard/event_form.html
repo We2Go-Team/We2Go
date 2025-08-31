@@ -51,6 +51,18 @@
                             value="{{ event.alias if event else '' }}" />
                     </div>
 
+                    <div class="input-field">
+                        <p>Thể loại sự kiện</p>
+                        <select id="category" name="category">
+                            {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if event and event.category_id==cat.id %} selected {% endif
+                                %}>
+                                {{ cat.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
                     <div class="input-group">
                         <div class="input-field">
                             <p>Thời gian tổ chức</p>
@@ -387,7 +399,6 @@
     }
 
     function updateCurrentZone() {
-        console.log("Updating zone:", zones[currentZoneIndex]);
         // Kiểm tra có zone nào đang được chọn không
         if (currentZoneIndex < 0 || currentZoneIndex >= zones.length) {
             console.error("No zone selected");
@@ -395,7 +406,7 @@
         }
 
         const zone = zones[currentZoneIndex];
-        
+
         // Lấy giá trị từ form
         const zoneNameInput = document.getElementById("zone-name");
         const zoneTypeSelect = document.getElementById("zone-type");
@@ -408,7 +419,7 @@
         zone.capacity = parseInt(zoneCapacityInput.value) || zone.capacity;
         zone.description = zoneDescriptionInput.value || zone.description;
         zone.metadata = { ...zone.metadata, isUpdated: true }
-        
+
         // Cập nhật UI nếu cần (tên zone trong danh sách)
         const zoneElement = document.querySelector(`.zone-item.active`);
         if (zoneElement) {
@@ -427,8 +438,6 @@
 
     // Ticket Methods
     function addTicket() {
-
-
         // Lấy thông tin từ form vé
         const ticketName = document.querySelector("[name='name']").value || "Vé mới";
         const ticketPrice = document.querySelector("[name='price']").value || 0;
