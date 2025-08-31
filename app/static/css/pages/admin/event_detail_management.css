@@ -69,7 +69,7 @@
         border-radius: 10px;
         flex-basis: 45%;
         flex-shrink: 1;
-
+        max-width: 45%;
     }
 
     .info-container div.title {

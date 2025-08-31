@@ -6,8 +6,6 @@ from app.services import EventService
 
 
 events = Blueprint('events', __name__, url_prefix='/events')
-
-
 def slugify(text):
     text = text.replace('đ', 'd').replace('Đ', 'd')
     text = unicodedata.normalize('NFD', text)

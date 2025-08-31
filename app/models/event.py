@@ -37,27 +37,23 @@ class Event(db.Model):
     min_price = db.Column(db.Float, nullable=True)
     alias = db.Column(db.String(255), unique=True, nullable=False)
     images = db.Column(db.Text, nullable=False)
-    categories = db.relationship(
-        "Category", secondary=event_categories, back_populates="events"
-    )
+    category_id = db.Column(CHAR(36), db.ForeignKey("categories.id"), nullable=True)
+    category = db.relationship("Category", back_populates="events")
 
     # Event Method
     def to_dict(self):
         return {
             "id": str(self.id),
             "title": self.title,
-            "categories": self.categories,
-            "date": (
-                self.time_start.strftime("%Y-%m-%d %H:%M:%S")
-                if self.time_start
-                else None
-            ),
+            "category": {
+                "id": self.category.id,
+                "name": self.category.name,
+                "description": self.category.description
+            } if self.category else None,
+            "date": self.time_start.strftime("%Y-%m-%d %H:%M:%S") if self.time_start else None,
             "location": {"venue": self.venue, "address": self.location},
-            "status": (
-                self.status.value if hasattr(self.status, "value") else str(self.status)
-            ),
-            # hiện chưa có quan hệ ticket, nên gắn placeholder
-            "sold": "0 vé",
+            "status": self.status.value if hasattr(self.status, "value") else str(self.status),
+            "sold": "0 vé",  # placeholder
         }
 
 

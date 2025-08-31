@@ -33,7 +33,8 @@ class EventRepository:
     def get_all_events(include_relationships=False):
         query = Event.query
         if include_relationships:
-            query = query.options(db.joinedload(Event.categories))
+            # Load relationship "category" (1-1)
+            query = query.options(joinedload(Event.category))
         return query.all()
 
     @staticmethod

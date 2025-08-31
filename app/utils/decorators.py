@@ -77,7 +77,8 @@ def validate_dto_fields(dto_class, template, context_extra=None):
                     
                     if context_extra:
                         context.update(context_extra)
-                    return render_template(template, **context)
+                        
+                    return redirect(url_for(template, **context))
 
                 # Nếu hợp lệ, gán dto_instance vào kwargs để route sử dụng
                 kwargs["dto_class"] = dto_instance
