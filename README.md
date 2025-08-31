@@ -38,7 +38,7 @@
 ## ⚡ Cách chạy thử local
 
 ```bash
-git clone https://github.com/<your-username>/We2Go.git
+git clone https://github.com/We2Go-Team/We2Go.git
 cd We2Go
 python -m venv .venv
 .venv\Scripts\activate
